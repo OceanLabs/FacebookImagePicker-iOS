@@ -56,6 +56,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIView *loadingFooter;
+@property (nonatomic, strong) OLPhotoViewController *photoViewController;
 
 @end
 
@@ -115,8 +116,21 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     }];
 }
 
+- (void)updateSelectedFromPhotoViewController {
+    if (self.photoViewController) {
+        // we're coming back from a photo view so update the selected to reflect any changes the user made
+        self.selected = self.photoViewController.selected;
+        self.photoViewController = nil;
+    }
+}
+
 - (void)onButtonDoneClicked {
     [self.delegate albumViewControllerDoneClicked:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self updateSelectedFromPhotoViewController];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -149,9 +163,11 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OLFacebookAlbum *album = [self.albums objectAtIndex:indexPath.row];
-    OLPhotoViewController *photoViewController = [[OLPhotoViewController alloc] initWithAlbum:album];
-    photoViewController.delegate = self;
-    [self.navigationController pushViewController:photoViewController animated:YES];
+    self.photoViewController = [[OLPhotoViewController alloc] initWithAlbum:album];
+    self.photoViewController.selected = self.selected;
+    self.photoViewController.delegate = self;
+    [self.navigationController pushViewController:self.photoViewController animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -165,6 +181,8 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 #pragma mark - OLPhotoViewControllerDelegate methods
 
 - (void)photoViewControllerDoneClicked:(OLPhotoViewController *)photoController {
+    NSAssert(self.photoViewController != nil, @"oops");
+    [self updateSelectedFromPhotoViewController];
     [self.delegate albumViewControllerDoneClicked:self];
 }
 

@@ -58,7 +58,7 @@
                                       } else {
                                           // connection is open, perform the request
                                           [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-                                          NSString *graphPath = @"me/albums?limit=100&fields=id,name,count,cover_photo";
+                                          NSString *graphPath = @"me/albums?limit=15&fields=id,name,count,cover_photo";
                                           if (self.after) {
                                               graphPath = [graphPath stringByAppendingFormat:@"&after=%@", self.after];
                                           }

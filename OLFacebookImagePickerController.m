@@ -19,6 +19,7 @@
     OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
     if (self = [super initWithRootViewController:albumController]) {
         albumController.delegate = self;
+        self.albumVC = albumController;
     }
     
     return self;
@@ -43,7 +44,7 @@
 #pragma mark - OLAlbumViewControllerDelegate methods
 
 - (void)albumViewControllerDoneClicked:(OLAlbumViewController *)albumController {
-    [self.delegate facebookImagePickerDidCancelPickingImages:self];
+    [self.delegate facebookImagePicker:self didFinishPickingImages:albumController.selected];
 }
 
 @end
