@@ -57,6 +57,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIView *loadingFooter;
 @property (nonatomic, strong) OLPhotoViewController *photoViewController;
+@property (nonatomic, strong) NSError *getAlbumError;
 
 @end
 
@@ -85,15 +86,35 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     self.loadingFooter = loadingFooter;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (self.getAlbumError) {
+        self.loadingIndicator.hidden = YES;
+        NSError *error = self.getAlbumError;
+        self.getAlbumError = nil;
+        [self.delegate albumViewController:self didFailWithError:error];
+        
+    }
+}
+
 - (void)loadNextAlbumPage {
     self.inProgressRequest = self.albumRequestForNextPage;
     self.albumRequestForNextPage = nil;
     [self.inProgressRequest getAlbums:^(NSArray/*<OLFacebookAlbum>*/ *albums, NSError *error, OLFacebookAlbumRequest *nextPageRequest) {
         self.inProgressRequest = nil;
-        self.albumRequestForNextPage = nextPageRequest;
-        
         self.loadingIndicator.hidden = YES;
-        
+        self.albumRequestForNextPage = nextPageRequest;
+
+        if (error) {
+            if (self.parentViewController.isBeingPresented) {
+                self.loadingIndicator.hidden = NO;
+                self.getAlbumError = error; // delay notification so that delegate can dismiss view controller safely if desired.
+            } else {
+                [self.delegate albumViewController:self didFailWithError:error];
+            }
+            return;
+        }
+
         NSMutableArray *paths = [[NSMutableArray alloc] init];
         for (NSUInteger i = 0; i < albums.count; ++i) {
             [paths addObject:[NSIndexPath indexPathForRow:self.albums.count + i inSection:0]];
@@ -184,6 +205,10 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     NSAssert(self.photoViewController != nil, @"oops");
     [self updateSelectedFromPhotoViewController];
     [self.delegate albumViewControllerDoneClicked:self];
+}
+
+- (void)photoViewController:(OLPhotoViewController *)photoController didFailWithError:(NSError *)error {
+    [self.delegate albumViewController:self didFailWithError:error];
 }
 
 @end

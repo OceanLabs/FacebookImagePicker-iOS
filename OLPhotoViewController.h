@@ -13,6 +13,7 @@
 
 @protocol OLPhotoViewControllerDelegate <NSObject>
 - (void)photoViewControllerDoneClicked:(OLPhotoViewController *)photoController;
+- (void)photoViewController:(OLPhotoViewController *)photoController didFailWithError:(NSError *)error;
 @end
 
 @interface OLPhotoViewController : UIViewController

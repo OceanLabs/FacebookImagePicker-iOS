@@ -12,6 +12,7 @@
 
 @protocol OLAlbumViewControllerDelegate <NSObject>
 - (void)albumViewControllerDoneClicked:(OLAlbumViewController *)albumController;
+- (void)albumViewController:(OLAlbumViewController *)albumController didFailWithError:(NSError *)error;
 @end
 
 @interface OLAlbumViewController : UIViewController

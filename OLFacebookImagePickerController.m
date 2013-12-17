@@ -18,8 +18,8 @@
 - (id)init {
     OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
     if (self = [super initWithRootViewController:albumController]) {
-        albumController.delegate = self;
         self.albumVC = albumController;
+        self.albumVC.delegate = self;
     }
     
     return self;
@@ -45,6 +45,10 @@
 
 - (void)albumViewControllerDoneClicked:(OLAlbumViewController *)albumController {
     [self.delegate facebookImagePicker:self didFinishPickingImages:albumController.selected];
+}
+
+- (void)albumViewController:(OLAlbumViewController *)albumController didFailWithError:(NSError *)error {
+    [self.delegate facebookImagePicker:self didFailWithError:error];
 }
 
 @end

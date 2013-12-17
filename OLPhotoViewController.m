@@ -105,19 +105,7 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
         self.loadingIndicator.hidden = YES;
         
         if (error) {
-            // clear all accounts and redo login...
-//            if (error.domain == kOLInstagramImagePickerErrorDomain && error.code == kOLInstagramImagePickerErrorCodeOAuthTokenInvalid) {
-//                // need to renew auth token, start by clearing any accounts. A new one will be created as part of the login process.
-//                NSArray *instagramAccounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:@"instagram"];
-//                for (NXOAuth2Account *account in instagramAccounts) {
-//                    [[NXOAuth2AccountStore sharedStore] removeAccount:account];
-//                }
-//                
-//                [((OLInstagramImagePickerController *) self.navigationController) flipToInstagramLoginController];
-//            } else {
-//                OLInstagramImagePickerController *imagePicker = (OLInstagramImagePickerController *) self.navigationController;
-//                [imagePicker.delegate instagramImagePicker:imagePicker didFailWithError:error];
-//            }
+            [self.delegate photoViewController:self didFailWithError:error];
             return;
         }
         

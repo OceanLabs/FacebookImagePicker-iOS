@@ -73,7 +73,7 @@
                                           handler(nil, [NSError errorWithDomain:error.domain code:error.code userInfo:@{NSLocalizedDescriptionKey: message}], nil);
                                       } else {
                                           // connection is open, perform the request
-                                          NSString *graphPath = [NSString stringWithFormat:@"%@/photos?fields=picture,source&limit=30", self.album.albumId];
+                                          NSString *graphPath = [NSString stringWithFormat:@"%@/photos?fields=picture,source&limit=100", self.album.albumId];
                                           if (self.after) {
                                               graphPath = [graphPath stringByAppendingFormat:@"&after=%@", self.after];
                                           }
