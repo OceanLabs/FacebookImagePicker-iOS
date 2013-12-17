@@ -14,6 +14,7 @@
 - (void)albumViewControllerDoneClicked:(OLAlbumViewController *)albumController;
 @end
 
-@interface OLAlbumViewController : UITableViewController
+@interface OLAlbumViewController : UIViewController
 @property (nonatomic, weak) id<OLAlbumViewControllerDelegate> delegate;
+@property (nonatomic, strong) NSArray/*<OLFacebookImage>*/ *selected;
 @end

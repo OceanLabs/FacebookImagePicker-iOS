@@ -13,6 +13,7 @@
 
 @interface OLFacebookAlbumRequest ()
 @property (nonatomic, assign) BOOL cancelled;
+@property (nonatomic, strong) NSString *after;
 @end
 
 @implementation OLFacebookAlbumRequest
@@ -34,13 +35,16 @@
 
 - (void)cancel {
     self.cancelled = YES;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (void)getAlbums:(OLFacebookAlbumRequestHandler)handler {
     __block BOOL runOnce = NO;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",  @"user_photos"]
                                        allowLoginUI:YES
                                   completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                                      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                                       if (runOnce || self.cancelled) {
                                           return;
                                       }
@@ -48,15 +52,20 @@
                                       runOnce = YES;
                                       if (error) {
                                           [OLFacebookAlbumRequest handleFacebookError:error completionHandler:handler];
-                                          return;
                                       } else if (!FB_ISSESSIONOPENWITHSTATE(state)) {
                                           NSString *message = @"Failed to access your Facebook photos. Please check your internet connectivity and try again.";
                                           handler(nil, [NSError errorWithDomain:error.domain code:error.code userInfo:@{NSLocalizedDescriptionKey: message}], nil);
                                       } else {
                                           // connection is open, perform the request
-                                          [FBRequestConnection startWithGraphPath:@"me/albums?limit=100&fields=id,name,count,cover_photo" completionHandler:^(FBRequestConnection *connection,
+                                          [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+                                          NSString *graphPath = @"me/albums?limit=100&fields=id,name,count,cover_photo";
+                                          if (self.after) {
+                                              graphPath = [graphPath stringByAppendingFormat:@"&after=%@", self.after];
+                                          }
+                                          [FBRequestConnection startWithGraphPath:graphPath completionHandler:^(FBRequestConnection *connection,
                                                                                                                                                               id result,
                                                                                                                                                               NSError *error) {
+                                              [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                                               if (self.cancelled) {
                                                   return;
                                               }
@@ -89,18 +98,26 @@
                                                   album.albumId = albumId;
                                                   album.photoCount = [photoCount unsignedIntegerValue];
                                                   album.name = name;
-                                                  album.coverPhotoURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=thumbnail&access_token=%@", album.albumId, session.accessTokenData.accessToken]];
+                                                  album.coverPhotoURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=small&access_token=%@", album.albumId, session.accessTokenData.accessToken]];
                                                   [albums addObject:album];
-                                                  
-//                                                  paging =     {
-//                                                      cursors =         {
-//                                                          after = ODEwOTc4Njg3MDQ4;
-//                                                          before = "MTAxMDA4NDYxODQ3Mzc3OTg=";
-//                                                      };
-//                                                  };
                                               }
                                               
-                                              handler(albums, nil, nil);
+                                              // get next page cursor
+                                              OLFacebookAlbumRequest *nextPageRequest = nil;
+                                              id paging = [result objectForKey:@"paging"];
+                                              if ([paging isKindOfClass:[NSDictionary class]]) {
+                                                  id cursors = [paging objectForKey:@"cursors"];
+                                                  id next = [paging objectForKey:@"next"]; // next will be non nil if a next page exists
+                                                  if (next && [cursors isKindOfClass:[NSDictionary class]]) {
+                                                      id after = [cursors objectForKey:@"after"];
+                                                      if ([after isKindOfClass:[NSString class]]) {
+                                                          nextPageRequest = [[OLFacebookAlbumRequest alloc] init];
+                                                          nextPageRequest.after = after;
+                                                      }
+                                                  }
+                                              }
+                                              
+                                              handler(albums, nil, nextPageRequest);
                                           }];
                                       }
                                   }];

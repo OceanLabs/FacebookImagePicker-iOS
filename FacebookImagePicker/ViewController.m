@@ -13,29 +13,29 @@
 #import "OLFacebookAlbum.h"
 #import "OLFacebookImage.h"
 #import "OLFacebookImagePickerController.h"
+#import <FacebookSDK.h>
 
 @interface ViewController () <UINavigationControllerDelegate, OLFacebookImagePickerControllerDelegate>
 @property (nonatomic, strong) OLFacebookAlbumRequest *albumRequest;
+@property (nonatomic, strong) NSArray *selected;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    OLFacebookAlbumRequest *req = [[OLFacebookAlbumRequest alloc] init];
-    [req getAlbums:^(NSArray *albums, NSError *error, OLFacebookAlbumRequest *nextPageRequest) {
-        OLFacebookPhotosForAlbumRequest *photosForAlbumReq = [[OLFacebookPhotosForAlbumRequest alloc] init];
-        [photosForAlbumReq getPhotosForAlbum:albums.lastObject completionHandler:^(NSArray/*<OLFacebookImage>*/ *photos, NSError *error, OLFacebookPhotosForAlbumRequest *nextPageRequest) {
-            for (OLFacebookImage *facebookImage in photos) {
-                NSLog(@"thumb: %@", facebookImage.thumbURL);
-            }
-        }];
-    }];
+    
+    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"basic_info",  @"user_photos"]];
+    CGRect f = loginView.frame;
+    f.origin.x = (self.view.frame.size.width - f.size.width) / 2;
+    f.origin.y = (self.view.frame.size.height - f.size.height) / 2;
+    loginView.frame = f;
+    [self.view addSubview:loginView];
 }
 
 - (IBAction)onButtonFacebookImagePickerClicked:(id)sender {
     OLFacebookImagePickerController *picker = [[OLFacebookImagePickerController alloc] init];
+    picker.selected = self.selected;
     picker.delegate = self;
    [self presentViewController:picker animated:YES completion:nil];
 }
@@ -48,6 +48,7 @@
 
 - (void)facebookImagePicker:(OLFacebookImagePickerController *)imagePicker didFinishPickingImages:(NSArray/*<OLFacebookImage>*/ *)images {
     [self dismissViewControllerAnimated:YES completion:nil];
+    self.selected = images;
 }
 
 - (void)facebookImagePickerDidCancelPickingImages:(OLFacebookImagePickerController *)imagePicker {

@@ -7,8 +7,55 @@
 //
 
 #import "OLAlbumViewController.h"
+#import "OLFacebookAlbumRequest.h"
+#import "OLFacebookAlbum.h"
+#import "OLPhotoViewController.h"
+#import <UIImageView+FadeIn.h>
 
-@interface OLAlbumViewController ()
+static const NSUInteger kAlbumPreviewImageSize = 78;
+
+@interface OLAlbumCell : UITableViewCell
+@property (nonatomic, strong) OLFacebookAlbum *album;
+@end
+
+@implementation OLAlbumCell
+
+- (void)setAlbum:(OLFacebookAlbum *)album {
+    static UIImage *placeholderImage = nil;
+    if (!placeholderImage) {
+        placeholderImage = [UIImage imageNamed:@"album_placeholder"];
+    }
+    [self.imageView setAndFadeInImageWithURL:album.coverPhotoURL placeholder:placeholderImage];
+    self.imageView.clipsToBounds = YES;
+    self.textLabel.text         = album.name;
+    self.detailTextLabel.text   = [NSString stringWithFormat:@"%d", album.photoCount];
+    self.accessoryType          = UITableViewCellAccessoryDisclosureIndicator;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.imageView.bounds = CGRectMake(0, 0, kAlbumPreviewImageSize, kAlbumPreviewImageSize);
+    self.imageView.frame  = CGRectMake(15, (self.frame.size.height - kAlbumPreviewImageSize) / 2, kAlbumPreviewImageSize, kAlbumPreviewImageSize);
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    CGRect tmpFrame = self.textLabel.frame;
+    tmpFrame.origin.x = CGRectGetMaxX(self.imageView.frame) + 15;
+    self.textLabel.frame = tmpFrame;
+    
+    tmpFrame = self.detailTextLabel.frame;
+    tmpFrame.origin.x = CGRectGetMaxX(self.imageView.frame) + 15;
+    self.detailTextLabel.frame = tmpFrame;
+}
+
+@end
+
+@interface OLAlbumViewController () <UITableViewDelegate, UITableViewDataSource, OLPhotoViewControllerDelegate>
+@property (nonatomic, strong) OLFacebookAlbumRequest *albumRequestForNextPage;
+@property (nonatomic, strong) OLFacebookAlbumRequest *inProgressRequest;
+@property (nonatomic, strong) NSMutableArray *albums;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *loadingIndicator;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UIView *loadingFooter;
 
 @end
 
@@ -17,101 +64,108 @@
 - (id)init {
     if (self = [super init]) {
         self.title = @"Photos";
+        self.albums = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(onButtonDoneClicked)];
+    self.albumRequestForNextPage = [[OLFacebookAlbumRequest alloc] init];
+    [self loadNextAlbumPage];
+    
+    UIView *loadingFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.frame = CGRectMake((320 - activityIndicator.frame.size.width) / 2, (44 - activityIndicator.frame.size.height) / 2, activityIndicator.frame.size.width, activityIndicator.frame.size.height);
+    [activityIndicator startAnimating];
+    [loadingFooter addSubview:activityIndicator];
+    self.loadingFooter = loadingFooter;
+}
+
+- (void)loadNextAlbumPage {
+    self.inProgressRequest = self.albumRequestForNextPage;
+    self.albumRequestForNextPage = nil;
+    [self.inProgressRequest getAlbums:^(NSArray/*<OLFacebookAlbum>*/ *albums, NSError *error, OLFacebookAlbumRequest *nextPageRequest) {
+        self.inProgressRequest = nil;
+        self.albumRequestForNextPage = nextPageRequest;
+        
+        self.loadingIndicator.hidden = YES;
+        
+        NSMutableArray *paths = [[NSMutableArray alloc] init];
+        for (NSUInteger i = 0; i < albums.count; ++i) {
+            [paths addObject:[NSIndexPath indexPathForRow:self.albums.count + i inSection:0]];
+        }
+        
+        [self.albums addObjectsFromArray:albums];
+        if (self.albums.count == albums.count) {
+            // first insert request
+            [self.tableView reloadData];
+        } else {
+            [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationFade];
+        }
+        
+        if (nextPageRequest) {
+            self.tableView.tableFooterView = self.loadingFooter;
+        } else {
+            self.tableView.tableFooterView = nil;
+        }
+        
+    }];
 }
 
 - (void)onButtonDoneClicked {
     [self.delegate albumViewControllerDoneClicked:self];
 }
 
-#pragma mark - Table view data source
+#pragma mark - UITableViewDataSource methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.albums.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"AlbumCell";
+    OLAlbumCell *cell = (OLAlbumCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[OLAlbumCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
+
+    cell.album = [self.albums objectAtIndex:indexPath.row];
     
-    // Configure the cell...
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+#pragma mark - UITableViewDelegate methods
+
+- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return kAlbumPreviewImageSize + 12;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    OLFacebookAlbum *album = [self.albums objectAtIndex:indexPath.row];
+    OLPhotoViewController *photoViewController = [[OLPhotoViewController alloc] initWithAlbum:album];
+    photoViewController.delegate = self;
+    [self.navigationController pushViewController:photoViewController animated:YES];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // this is actually the UICollectionView scrollView
+    if (self.inProgressRequest == nil && scrollView.contentOffset.y >= self.tableView.contentSize.height - (self.tableView.frame.size.height + self.loadingFooter.frame.size.height)) {
+        // we've reached the bottom, lets load the next page of albums.
+        [self loadNextAlbumPage];
+    }
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+#pragma mark - OLPhotoViewControllerDelegate methods
+
+- (void)photoViewControllerDoneClicked:(OLPhotoViewController *)photoController {
+    [self.delegate albumViewControllerDoneClicked:self];
 }
-*/
-
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
-}
- 
- */
 
 @end

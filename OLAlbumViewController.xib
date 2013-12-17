@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4469" systemVersion="13A476u" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3694"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OLAlbumViewController">
             <connections>
-                <outlet property="view" destination="4" id="5"/>
+                <outlet property="loadingIndicator" destination="uN1-Mn-J0m" id="XuB-jm-xDL"/>
+                <outlet property="tableView" destination="a40-Hh-fJl" id="Oma-rI-gjJ"/>
+                <outlet property="view" destination="PpM-oP-rJC" id="UlF-o7-7Iw"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bouncesZoom="NO" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="4">
+        <view contentMode="scaleToFill" id="PpM-oP-rJC">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <connections>
-                <outlet property="dataSource" destination="-1" id="6"/>
-                <outlet property="delegate" destination="-1" id="7"/>
-            </connections>
-        </tableView>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="a40-Hh-fJl">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="JA0-n1-ADi"/>
+                        <outlet property="delegate" destination="-1" id="3LO-fe-6aR"/>
+                    </connections>
+                </tableView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uN1-Mn-J0m">
+                    <rect key="frame" x="150" y="274" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="uN1-Mn-J0m" firstAttribute="top" secondItem="PpM-oP-rJC" secondAttribute="top" constant="274" id="HB5-OE-M7w"/>
+                <constraint firstAttribute="trailing" secondItem="a40-Hh-fJl" secondAttribute="trailing" id="NSs-iF-JlQ"/>
+                <constraint firstAttribute="bottom" secondItem="a40-Hh-fJl" secondAttribute="bottom" id="Vbi-t5-Fny"/>
+                <constraint firstItem="a40-Hh-fJl" firstAttribute="leading" secondItem="PpM-oP-rJC" secondAttribute="leading" id="gDR-Fp-ecJ"/>
+                <constraint firstItem="a40-Hh-fJl" firstAttribute="top" secondItem="PpM-oP-rJC" secondAttribute="top" id="o4J-FZ-R8z"/>
+            </constraints>
+        </view>
     </objects>
 </document>

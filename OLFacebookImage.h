@@ -18,9 +18,10 @@
  
  @param thumbURL The URL to access the thumbnail image
  @param fullURL The URL to access the standard resolution image
+ @param albumId The Facebook album id to which this photo belongs
  @return Returns an initialised OLFacebookImage instance
  */
-- (id)initWithThumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL;
+- (id)initWithThumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL albumId:(NSString *)albumId;
 
 /**
  The URL to access the thumb resolution image
@@ -31,5 +32,10 @@
  The URL to access the standard resolution image
  */
 @property (nonatomic, readonly) NSURL *fullURL;
+
+/**
+ The Facebook album id to which this photo belongs
+ */
+@property (nonatomic, readonly) NSString *albumId;
 
 @end

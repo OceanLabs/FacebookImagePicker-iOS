@@ -9,10 +9,11 @@
 #import "OLFacebookImage.h"
 
 @implementation OLFacebookImage
-- (id)initWithThumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL {
+- (id)initWithThumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL albumId:(NSString *)albumId {
     if (self = [super init]) {
         _thumbURL = thumbURL;
         _fullURL = fullURL;
+        _albumId = albumId;
     }
     
     return self;
@@ -23,11 +24,11 @@
         return NO;
     }
     
-    return [self.thumbURL isEqual:[object thumbURL]] && [self.fullURL isEqual:[object fullURL]];
+    return [self.thumbURL isEqual:[object thumbURL]] && [self.fullURL isEqual:[object fullURL]] && [self.albumId isEqualToString:[object albumId]];
 }
 
 - (NSUInteger)hash {
-    return self.thumbURL.hash + self.fullURL.hash;
+    return 37 * (37 * self.thumbURL.hash + self.fullURL.hash) + self.albumId.hash;
 }
 
 @end
