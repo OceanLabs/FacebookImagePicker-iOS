@@ -106,7 +106,7 @@
                                                       continue;
                                                   }
                                                   
-                                                  OLFacebookImage *image = [[OLFacebookImage alloc] initWithThumbURL:[NSURL URLWithString:thumbURLString] fullURL:[NSURL URLWithString:thumbURLString] albumId:self.album.albumId];
+                                                  OLFacebookImage *image = [[OLFacebookImage alloc] initWithThumbURL:[NSURL URLWithString:thumbURLString] fullURL:[NSURL URLWithString:fullURLString] albumId:self.album.albumId];
                                                   [albumPhotos addObject:image];
                                               }
                                               
