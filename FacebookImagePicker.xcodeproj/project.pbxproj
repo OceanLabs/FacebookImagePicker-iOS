@@ -16,7 +16,6 @@
 		CD73BEF2185F22C00009DE03 /* OLFacebookImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73BEF1185F22C00009DE03 /* OLFacebookImagePickerController.m */; };
 		CD73BF01185F26F60009DE03 /* OLAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73BEFF185F26F60009DE03 /* OLAlbumViewController.m */; };
 		CD73BF02185F26F60009DE03 /* OLAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD73BF00185F26F60009DE03 /* OLAlbumViewController.xib */; };
-		CD73BF4A185F5ED50009DE03 /* album_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD73BF49185F5ED50009DE03 /* album_placeholder@2x.png */; };
 		CD73BF54185F6C570009DE03 /* OLPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73BF52185F6C570009DE03 /* OLPhotoViewController.m */; };
 		CD73BF55185F6C570009DE03 /* OLPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD73BF53185F6C570009DE03 /* OLPhotoViewController.xib */; };
 		CD73BF5C185F7B560009DE03 /* OLFacebookImagePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73BF5B185F7B560009DE03 /* OLFacebookImagePickerCell.m */; };
@@ -64,7 +63,6 @@
 		CD73BEFE185F26F60009DE03 /* OLAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLAlbumViewController.h; sourceTree = "<group>"; };
 		CD73BEFF185F26F60009DE03 /* OLAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLAlbumViewController.m; sourceTree = "<group>"; };
 		CD73BF00185F26F60009DE03 /* OLAlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OLAlbumViewController.xib; sourceTree = "<group>"; };
-		CD73BF49185F5ED50009DE03 /* album_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "album_placeholder@2x.png"; sourceTree = "<group>"; };
 		CD73BF51185F6C570009DE03 /* OLPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLPhotoViewController.h; sourceTree = "<group>"; };
 		CD73BF52185F6C570009DE03 /* OLPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLPhotoViewController.m; sourceTree = "<group>"; };
 		CD73BF53185F6C570009DE03 /* OLPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OLPhotoViewController.xib; sourceTree = "<group>"; };
@@ -179,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				CD73BF5D185F7F530009DE03 /* FacebookImagePicker.xcassets */,
-				CD73BF49185F5ED50009DE03 /* album_placeholder@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -372,7 +369,6 @@
 				CD73BF02185F26F60009DE03 /* OLAlbumViewController.xib in Resources */,
 				CD9AF178185E206A00A56B3F /* InfoPlist.strings in Resources */,
 				CD9AF181185E206A00A56B3F /* Main.storyboard in Resources */,
-				CD73BF4A185F5ED50009DE03 /* album_placeholder@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

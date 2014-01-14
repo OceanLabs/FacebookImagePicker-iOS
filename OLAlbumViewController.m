@@ -25,6 +25,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     if (!placeholderImage) {
         placeholderImage = [UIImage imageNamed:@"album_placeholder"];
     }
+    
     [self.imageView setAndFadeInImageWithURL:album.coverPhotoURL placeholder:placeholderImage];
     self.imageView.clipsToBounds = YES;
     self.textLabel.text         = album.name;
