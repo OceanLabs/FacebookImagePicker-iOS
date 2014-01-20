@@ -11,7 +11,7 @@
 /**
  The OLFacebookImage class provides a simple model object representation of an Facebook album photo.
  */
-@interface OLFacebookImage : NSObject
+@interface OLFacebookImage : NSObject <NSCoding, NSCopying>
 
 /**
  Initialises a new OLFacebookImage object instance.
