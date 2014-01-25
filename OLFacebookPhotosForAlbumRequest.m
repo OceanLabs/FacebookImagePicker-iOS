@@ -116,7 +116,6 @@
                                                               [width isKindOfClass:[NSNumber class]] &&
                                                               [height isKindOfClass:[NSNumber class]]) {
                                                               [sourceImages addObject:[[OLFacebookImageURL alloc] initWithURL:[NSURL URLWithString:source] size:CGSizeMake([width floatValue], [height floatValue])]];
-                                                              NSLog(@"%@ - %fx%f", source, [width floatValue], [height floatValue]);
                                                           }
                                                       }
                                                   }

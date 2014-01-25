@@ -71,7 +71,7 @@ static UIColor *disabledColor;
 
 - (void)bind:(OLFacebookImage *)media {
     self.facebookImage = media;
-    [self.imageView setAndFadeInImageWithURL:media.thumbURL];
+    [self.imageView setAndFadeInImageWithURL:[media bestURLForSize:CGSizeMake(220, 220)]]; 
 }
 
 - (void)setSelected:(BOOL)selected {
