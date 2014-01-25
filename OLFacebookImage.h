@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+@interface OLFacebookImageURL : NSObject <NSCoding, NSCopying>
+- (id)initWithURL:(NSURL *)url size:(CGSize)size;
+@property (nonatomic, readonly) NSURL *url;
+@property (nonatomic, readonly) CGSize imageSize;
+@end
+
 /**
  The OLFacebookImage class provides a simple model object representation of an Facebook album photo.
  */
@@ -21,7 +27,9 @@
  @param albumId The Facebook album id to which this photo belongs
  @return Returns an initialised OLFacebookImage instance
  */
-- (id)initWithThumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL albumId:(NSString *)albumId;
+- (id)initWithThumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL albumId:(NSString *)albumId sourceImages:(NSArray/*<OLFacebookImageURL>*/ *)sourceImages;
+
+- (NSURL *)bestURLForSize:(CGSize)size;
 
 /**
  The URL to access the thumb resolution image
@@ -37,5 +45,7 @@
  The Facebook album id to which this photo belongs
  */
 @property (nonatomic, readonly) NSString *albumId;
+
+@property (nonatomic, readonly) NSArray/*<OLFacebookImageURL>*/ *sourceImages;
 
 @end

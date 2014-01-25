@@ -73,7 +73,7 @@
                                           handler(nil, [NSError errorWithDomain:kOLErrorDomainFacebookImagePicker code:kOLErrorCodeFacebookImagePickerNoOpenSession userInfo:@{NSLocalizedDescriptionKey: message}], nil);
                                       } else {
                                           // connection is open, perform the request
-                                          NSString *graphPath = [NSString stringWithFormat:@"%@/photos?fields=picture,source&limit=100", self.album.albumId];
+                                          NSString *graphPath = [NSString stringWithFormat:@"%@/photos?fields=picture,source,images&limit=100", self.album.albumId];
                                           if (self.after) {
                                               graphPath = [graphPath stringByAppendingFormat:@"&after=%@", self.after];
                                           }
@@ -106,7 +106,22 @@
                                                       continue;
                                                   }
                                                   
-                                                  OLFacebookImage *image = [[OLFacebookImage alloc] initWithThumbURL:[NSURL URLWithString:thumbURLString] fullURL:[NSURL URLWithString:fullURLString] albumId:self.album.albumId];
+                                                  NSMutableArray *sourceImages = [[NSMutableArray alloc] init];
+                                                  if ([photo[@"images"] isKindOfClass:[NSArray class]]) {
+                                                      for (id image in photo[@"images"]) {
+                                                          id source = image[@"source"];
+                                                          id width = image[@"width"];
+                                                          id height = image[@"height"];
+                                                          if ([source isKindOfClass:[NSString class]] &&
+                                                              [width isKindOfClass:[NSNumber class]] &&
+                                                              [height isKindOfClass:[NSNumber class]]) {
+                                                              [sourceImages addObject:[[OLFacebookImageURL alloc] initWithURL:[NSURL URLWithString:source] size:CGSizeMake([width floatValue], [height floatValue])]];
+                                                              NSLog(@"%@ - %fx%f", source, [width floatValue], [height floatValue]);
+                                                          }
+                                                      }
+                                                  }
+                                                  
+                                                  OLFacebookImage *image = [[OLFacebookImage alloc] initWithThumbURL:[NSURL URLWithString:thumbURLString] fullURL:[NSURL URLWithString:fullURLString] albumId:self.album.albumId sourceImages:sourceImages];
                                                   [albumPhotos addObject:image];
                                               }
                                               
