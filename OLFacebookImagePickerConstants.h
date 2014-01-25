@@ -10,4 +10,5 @@
 
 NSString *const kOLErrorDomainFacebookImagePicker;
 const NSInteger kOLErrorCodeFacebookImagePickerBadResponse;
+const NSInteger kOLErrorCodeFacebookImagePickerNoOpenSession;
 

@@ -70,7 +70,7 @@
                                           return;
                                       } else if (!FB_ISSESSIONOPENWITHSTATE(state)) {
                                           NSString *message = @"Failed to access your Facebook photos. Please check your internet connectivity and try again.";
-                                          handler(nil, [NSError errorWithDomain:error.domain code:error.code userInfo:@{NSLocalizedDescriptionKey: message}], nil);
+                                          handler(nil, [NSError errorWithDomain:kOLErrorDomainFacebookImagePicker code:kOLErrorCodeFacebookImagePickerNoOpenSession userInfo:@{NSLocalizedDescriptionKey: message}], nil);
                                       } else {
                                           // connection is open, perform the request
                                           NSString *graphPath = [NSString stringWithFormat:@"%@/photos?fields=picture,source&limit=100", self.album.albumId];

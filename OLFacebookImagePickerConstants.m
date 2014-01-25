@@ -10,3 +10,4 @@
 
 NSString *const kOLErrorDomainFacebookImagePicker = @"co.oceanlabs.FacebookImagePicker.kOLErrorDomainFacebookImagePicker";
 const NSInteger kOLErrorCodeFacebookImagePickerBadResponse = 99;
+const NSInteger kOLErrorCodeFacebookImagePickerNoOpenSession = 100;
