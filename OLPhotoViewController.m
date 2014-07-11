@@ -17,7 +17,7 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
 @interface SupplementaryView : UICollectionReusableView
 @end
 
-@interface OLPhotoViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface OLPhotoViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) OLFacebookAlbum *album;
 @property (nonatomic, strong) OLFacebookPhotosForAlbumRequest *nextPageRequest, *inProgressRequest;
@@ -49,8 +49,8 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
     UICollectionViewFlowLayout *layout  = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize                     = CGSizeMake(78, 78);
     layout.sectionInset                 = UIEdgeInsetsMake(9.0, 0, 0, 0);
-    layout.minimumInteritemSpacing      = 2.0;
-    layout.minimumLineSpacing           = 2.0;
+    layout.minimumInteritemSpacing      = 0.0;
+    layout.minimumLineSpacing           = 0.0;
     layout.footerReferenceSize          = CGSizeMake(0, 0);
     self.collectionView.collectionViewLayout = layout;
     self.collectionView.allowsMultipleSelection = YES;
@@ -143,7 +143,7 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
         }
         [self.selectedImagesInFuturePages removeObjectsInArray:selectedItemsInThisPage];
     }];
-
+    
 }
 
 - (void)onButtonDoneClicked {
@@ -176,6 +176,17 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
         [self loadNextPage];
     }
 }
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.item % 3 == 1) {
+        return CGSizeMake(108, 106);
+    } else {
+        return CGSizeMake(106, 106);
+    }
+}
+
 
 @end
 

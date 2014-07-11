@@ -22,6 +22,7 @@
 @property (nonatomic, strong) OLFacebookImage *facebookImage;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIImageView *checkImageView;
+@property (nonatomic, strong) UIImageView *uncheckImageView;
 @property (nonatomic, strong) UIView *selectedDisabledOverlayView;
 @end
 
@@ -32,6 +33,7 @@ static UIFont *titleFont = nil;
 static CGFloat titleHeight;
 static UIColor *titleColor;
 static UIImage *checkedIcon;
+static UIImage *uncheckedIcon;
 static UIColor *selectedColor;
 static UIColor *disabledColor;
 
@@ -39,7 +41,8 @@ static UIColor *disabledColor;
     titleFont       = [UIFont systemFontOfSize:12];
     titleHeight     = 20.0f;
     titleColor      = [UIColor whiteColor];
-    checkedIcon     = [UIImage imageNamed:(![UIDevice isIOS7OrAbove]) ? @"CTAssetsPickerChecked~iOS6" : @"CTAssetsPickerChecked"];
+    checkedIcon     = [UIImage imageNamed:@"Facebook_checked"];
+    uncheckedIcon = [UIImage imageNamed:@"Facebook_unchecked"];
     selectedColor   = [UIColor colorWithWhite:1 alpha:0.3];
     disabledColor   = [UIColor colorWithWhite:1 alpha:0.9];
 }
@@ -53,17 +56,20 @@ static UIColor *disabledColor;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         self.imageView.clipsToBounds = YES;
         self.checkImageView = [[UIImageView alloc] initWithImage:checkedIcon];
+        self.uncheckImageView = [[UIImageView alloc] initWithImage:uncheckedIcon];
         self.selectedDisabledOverlayView = [[UIView alloc] initWithFrame:f];
         self.selectedDisabledOverlayView.backgroundColor = selectedColor;
         self.selectedDisabledOverlayView.opaque = YES;
         self.selectedDisabledOverlayView.hidden = YES;
         
-        self.checkImageView.frame = CGRectMake(f.size.width - checkedIcon.size.width, 0, self.checkImageView.frame.size.width, self.checkImageView.frame.size.height);
+        self.checkImageView.frame = CGRectMake(f.size.width - checkedIcon.size.width - 5, 57.5, self.checkImageView.frame.size.width, self.checkImageView.frame.size.height);
+        self.uncheckImageView.frame = CGRectMake(f.size.width - checkedIcon.size.width - 5, 57.5, self.checkImageView.frame.size.width, self.checkImageView.frame.size.height);
         self.checkImageView.hidden = YES;
-        
+        self.uncheckImageView.hidden = NO;
         [self addSubview:self.imageView];
         [self addSubview:self.selectedDisabledOverlayView];
         [self addSubview:self.checkImageView];
+        [self addSubview:self.uncheckImageView];
     }
     
     return self;
@@ -78,6 +84,7 @@ static UIColor *disabledColor;
     [super setSelected:selected];
     self.selectedDisabledOverlayView.hidden = !selected;
     self.checkImageView.hidden = !selected;
+    self.uncheckImageView.hidden = selected;
 }
 
 @end

@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     :git => 'git@github.com:OceanLabs/FacebookImagePicker-iOS.git', :branch => 'sticky9'
   }
   s.source_files = 'OL*.{h,m}'
-  s.resources = ['FacebookImagePicker.xcassets', '*.xib']
+  s.resources = ['FacebookImagePicker.xcassets', '*.xib’]
   s.dependency 'Facebook-iOS-SDK'
   s.dependency 'UIImageView+FadeIn'
   s.dependency 'UIDevice+Hardware'
