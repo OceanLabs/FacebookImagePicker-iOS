@@ -29,8 +29,8 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
         _url = [aDecoder decodeObjectForKey:kKeyURL];
-        CGFloat w = [aDecoder decodeFloatForKey:kKeyImageWidth];
-        CGFloat h = [aDecoder decodeFloatForKey:kKeyImageHeight];
+        CGFloat w = [aDecoder decodeDoubleForKey:kKeyImageWidth];
+        CGFloat h = [aDecoder decodeDoubleForKey:kKeyImageHeight];
         _imageSize = CGSizeMake(w, h);
     }
     
@@ -39,8 +39,8 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:_url forKey:kKeyURL];
-    [aCoder encodeFloat:_imageSize.width forKey:kKeyImageWidth];
-    [aCoder encodeFloat:_imageSize.height forKey:kKeyImageHeight];
+    [aCoder encodeDouble:_imageSize.width forKey:kKeyImageWidth];
+    [aCoder encodeDouble:_imageSize.height forKey:kKeyImageHeight];
 }
 
 - (id)copyWithZone:(NSZone *)zone {

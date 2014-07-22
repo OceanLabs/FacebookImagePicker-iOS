@@ -115,7 +115,7 @@
                                                           if ([source isKindOfClass:[NSString class]] &&
                                                               [width isKindOfClass:[NSNumber class]] &&
                                                               [height isKindOfClass:[NSNumber class]]) {
-                                                              [sourceImages addObject:[[OLFacebookImageURL alloc] initWithURL:[NSURL URLWithString:source] size:CGSizeMake([width floatValue], [height floatValue])]];
+                                                              [sourceImages addObject:[[OLFacebookImageURL alloc] initWithURL:[NSURL URLWithString:source] size:CGSizeMake([width doubleValue], [height doubleValue])]];
                                                           }
                                                       }
                                                   }
