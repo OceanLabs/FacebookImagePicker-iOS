@@ -179,7 +179,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 
 #pragma mark - UITableViewDelegate methods
 
-- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return kAlbumPreviewImageSize + 12;
 }
 
