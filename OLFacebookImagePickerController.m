@@ -10,7 +10,7 @@
 #import "OLAlbumViewController.h"
 
 @interface OLFacebookImagePickerController () <OLAlbumViewControllerDelegate>
-@property (nonatomic, strong) OLAlbumViewController *albumVC;
+
 @end
 
 @implementation OLFacebookImagePickerController
@@ -20,8 +20,19 @@
     if (self = [super initWithRootViewController:albumController]) {
         self.albumVC = albumController;
         self.albumVC.delegate = self;
+        self.albumVC.shouldAllowMultiple = self.shouldAllowMultiple;
     }
     
+    return self;
+}
+
+-(id) initWithMultiple:(BOOL)multiple {
+    OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
+    if (self = [super initWithRootViewController:albumController]) {
+        self.albumVC = albumController;
+        self.albumVC.delegate = self;
+        self.albumVC.shouldAllowMultiple = multiple;
+    }
     return self;
 }
 

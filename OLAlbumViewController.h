@@ -18,4 +18,5 @@
 @interface OLAlbumViewController : UIViewController
 @property (nonatomic, weak) id<OLAlbumViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSArray/*<OLFacebookImage>*/ *selected;
+@property BOOL shouldAllowMultiple;
 @end

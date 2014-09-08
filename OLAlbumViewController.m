@@ -105,7 +105,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
         self.inProgressRequest = nil;
         self.loadingIndicator.hidden = YES;
         self.albumRequestForNextPage = nextPageRequest;
-
+        
         if (error) {
             if (self.parentViewController.isBeingPresented) {
                 self.loadingIndicator.hidden = NO;
@@ -115,7 +115,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
             }
             return;
         }
-
+        
         NSMutableArray *paths = [[NSMutableArray alloc] init];
         for (NSUInteger i = 0; i < albums.count; ++i) {
             [paths addObject:[NSIndexPath indexPathForRow:self.albums.count + i inSection:0]];
@@ -171,7 +171,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     if (cell == nil) {
         cell = [[OLAlbumCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-
+    
     cell.album = [self.albums objectAtIndex:indexPath.row];
     
     return cell;
@@ -188,6 +188,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     self.photoViewController = [[OLPhotoViewController alloc] initWithAlbum:album];
     self.photoViewController.selected = self.selected;
     self.photoViewController.delegate = self;
+    self.photoViewController.shouldAllowMultiple = self.shouldAllowMultiple;
     [self.navigationController pushViewController:self.photoViewController animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

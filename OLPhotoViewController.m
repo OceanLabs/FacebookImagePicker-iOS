@@ -53,7 +53,7 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
     layout.minimumLineSpacing           = 2.0;
     layout.footerReferenceSize          = CGSizeMake(0, 0);
     self.collectionView.collectionViewLayout = layout;
-    self.collectionView.allowsMultipleSelection = NO;
+    self.collectionView.allowsMultipleSelection = self.shouldAllowMultiple;
     
     [self.collectionView registerClass:[OLFacebookImagePickerCell class] forCellWithReuseIdentifier:kImagePickerCellReuseIdentifier];
     [self.collectionView registerClass:[SupplementaryView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kSupplementaryViewFooterReuseIdentifier];
@@ -143,7 +143,7 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
         }
         [self.selectedImagesInFuturePages removeObjectsInArray:selectedItemsInThisPage];
     }];
-
+    
 }
 
 - (void)onButtonDoneClicked {

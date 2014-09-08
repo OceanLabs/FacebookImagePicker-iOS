@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "OLAlbumViewController.h"
 @class OLFacebookImagePickerController;
 
 @protocol OLFacebookImagePickerControllerDelegate <NSObject>
@@ -30,7 +30,9 @@
  The image picker’s delegate object.
  */
 @property (nonatomic, weak) id <UINavigationControllerDelegate, OLFacebookImagePickerControllerDelegate> delegate;
-
+@property (nonatomic, strong) OLAlbumViewController *albumVC;
+@property BOOL shouldAllowMultiple;
+-(id)initWithMultiple:(BOOL)multiple;
 /**
  Holds the currently user selected images in the picker UI. Setting this property will result in the corresponding images in the picker UI updating.
  */
