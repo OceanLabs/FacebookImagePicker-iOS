@@ -7,7 +7,6 @@
 //
 
 #import "OLFacebookImagePickerCell.h"
-#import <UIDevice+Hardware.h>
 #import <UIImageView+FadeIn.h>
 #import "OLFacebookImage.h"
 
@@ -39,7 +38,7 @@ static UIColor *disabledColor;
     titleFont       = [UIFont systemFontOfSize:12];
     titleHeight     = 20.0f;
     titleColor      = [UIColor whiteColor];
-    checkedIcon     = [UIImage imageNamed:(![UIDevice isIOS7OrAbove]) ? @"CTAssetsPickerChecked~iOS6" : @"CTAssetsPickerChecked"];
+    checkedIcon     = [UIImage imageNamed:(!(floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)) ? @"CTAssetsPickerChecked~iOS6" : @"CTAssetsPickerChecked"];
     selectedColor   = [UIColor colorWithWhite:1 alpha:0.3];
     disabledColor   = [UIColor colorWithWhite:1 alpha:0.9];
 }
