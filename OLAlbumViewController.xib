@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OLAlbumViewController">
@@ -18,26 +18,31 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="a40-Hh-fJl">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="JA0-n1-ADi"/>
                         <outlet property="delegate" destination="-1" id="3LO-fe-6aR"/>
                     </connections>
                 </tableView>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uN1-Mn-J0m">
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uN1-Mn-J0m">
                     <rect key="frame" x="150" y="274" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="uN1-Mn-J0m" firstAttribute="top" secondItem="PpM-oP-rJC" secondAttribute="top" constant="274" id="HB5-OE-M7w"/>
                 <constraint firstAttribute="trailing" secondItem="a40-Hh-fJl" secondAttribute="trailing" id="NSs-iF-JlQ"/>
                 <constraint firstAttribute="bottom" secondItem="a40-Hh-fJl" secondAttribute="bottom" id="Vbi-t5-Fny"/>
+                <constraint firstAttribute="centerX" secondItem="uN1-Mn-J0m" secondAttribute="centerX" id="Zhc-zB-Txu"/>
                 <constraint firstItem="a40-Hh-fJl" firstAttribute="leading" secondItem="PpM-oP-rJC" secondAttribute="leading" id="gDR-Fp-ecJ"/>
                 <constraint firstItem="a40-Hh-fJl" firstAttribute="top" secondItem="PpM-oP-rJC" secondAttribute="top" id="o4J-FZ-R8z"/>
+                <constraint firstAttribute="centerY" secondItem="uN1-Mn-J0m" secondAttribute="centerY" id="ugz-gi-of4"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
         </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>
