@@ -46,11 +46,13 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(onButtonDoneClicked)];
     
+    CGFloat itemSize = [UIScreen mainScreen].bounds.size.width/4.0 - 1.0;
+    
     UICollectionViewFlowLayout *layout  = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize                     = CGSizeMake(78, 78);
+    layout.itemSize                     = CGSizeMake(itemSize, itemSize);
     layout.sectionInset                 = UIEdgeInsetsMake(9.0, 0, 0, 0);
-    layout.minimumInteritemSpacing      = 2.0;
-    layout.minimumLineSpacing           = 2.0;
+    layout.minimumInteritemSpacing      = 1.0;
+    layout.minimumLineSpacing           = 1.0;
     layout.footerReferenceSize          = CGSizeMake(0, 0);
     self.collectionView.collectionViewLayout = layout;
     self.collectionView.allowsMultipleSelection = YES;
