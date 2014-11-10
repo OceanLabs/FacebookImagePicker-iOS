@@ -10,6 +10,10 @@
 #import "OLFacebookAlbum.h"
 #import "OLFacebookImagePickerCell.h"
 #import "OLFacebookPhotosForAlbumRequest.h"
+#import "OLFacebookImage.h"
+#import "OLFacebookImagePickerController.h"
+
+#import <tgmath.h>
 
 static NSString *const kImagePickerCellReuseIdentifier = @"co.oceanlabs.facebookimagepicker.kImagePickerCellReuseIdentifier";
 static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.ps.kSupplementaryViewHeaderReuseIdentifier";
@@ -153,6 +157,21 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
     [self.delegate photoViewControllerDoneClicked:self];
 }
 
+-(void) updateTitleWithSelectedIndexPaths:(NSArray *)indexPaths{
+    // Reset title to group name
+    if (indexPaths.count == 0)
+    {
+        self.title = self.album.name;
+        return;
+    }
+    
+    OLFacebookImagePickerController *vc = (OLFacebookImagePickerController*) self.navigationController;
+    NSString *format = (indexPaths.count > 1) ? NSLocalizedString(@"%ld of %ld Photos Selected", nil) : NSLocalizedString(@"%ld of %ld Photo Selected", nil);
+    
+    
+    self.title = vc.maximumNumberOfSelection == 0 ? [NSString stringWithFormat:format, (long)indexPaths.count] : [NSString stringWithFormat:format, (long)indexPaths.count, vc.maximumNumberOfSelection];
+}
+
 #pragma mark - UICollectionViewDataSource methods
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -177,6 +196,37 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
         // we've reached the bottom, lets load the next page of facebook images.
         [self loadNextPage];
     }
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    OLFacebookImage *image = [self.photos objectAtIndex:indexPath.item];
+    
+    OLFacebookImagePickerController *vc = (OLFacebookImagePickerController*) self.navigationController;
+    
+    CGSize max= CGSizeZero;
+    for (OLFacebookImageURL *url in image.sourceImages){
+        if (fmax(max.width, max.height) < fmax(url.imageSize.height, url.imageSize.width)){
+            max = url.imageSize;
+        }
+    }
+    
+    if (fmin(max.height, max.width) < vc.minimumNumberOfPixelsForSmallerDimension){
+        NSString *message = [NSString stringWithFormat:@"The size of the image you selected is too small. Please select a photo taken from the back camera of your %@ or other high-quality source.\n\nMust be at least %ldpx by %ldpx\nThis is %.00fpx by %.00fpx", [UIDevice currentDevice].localizedModel, vc.minimumNumberOfPixelsForSmallerDimension, vc.minimumNumberOfPixelsForSmallerDimension, max.width, max.height];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Quality Matters!", @"") message:NSLocalizedString(message, @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+        [av show];
+        return NO;
+    }
+    
+    
+    return collectionView.indexPathsForSelectedItems.count < vc.maximumNumberOfSelection;
+}
+
+-(void) collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self updateTitleWithSelectedIndexPaths:collectionView.indexPathsForSelectedItems];
+}
+
+-(void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self updateTitleWithSelectedIndexPaths:collectionView.indexPathsForSelectedItems];
 }
 
 @end
