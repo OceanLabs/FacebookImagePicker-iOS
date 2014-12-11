@@ -166,7 +166,13 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
     }
     
     OLFacebookImagePickerController *vc = (OLFacebookImagePickerController*) self.navigationController;
-    NSString *format = (indexPaths.count > 1) ? NSLocalizedString(@"%ld of %ld Photos Selected", nil) : NSLocalizedString(@"%ld of %ld Photo Selected", nil);
+    NSString *format;
+    if (vc.maximumNumberOfSelection > 0){
+        format = (indexPaths.count > 1) ? NSLocalizedString(@"%ld of %ld Photos Selected", nil) : NSLocalizedString(@"%ld of %ld Photo Selected", nil);
+    }
+    else{
+        format = (indexPaths.count > 1) ? NSLocalizedString(@"%ld Photos Selected", nil) : NSLocalizedString(@"%ld Photo Selected", nil);
+    }
     
     
     self.title = vc.maximumNumberOfSelection == 0 ? [NSString stringWithFormat:format, (long)indexPaths.count] : [NSString stringWithFormat:format, (long)indexPaths.count, vc.maximumNumberOfSelection];
@@ -218,7 +224,7 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
     }
     
     
-    return collectionView.indexPathsForSelectedItems.count < vc.maximumNumberOfSelection;
+    return collectionView.indexPathsForSelectedItems.count < vc.maximumNumberOfSelection || vc.maximumNumberOfSelection == 0;
 }
 
 -(void) collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
