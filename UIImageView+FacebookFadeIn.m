@@ -11,7 +11,7 @@
 #include <sys/time.h>
 
 @implementation UIImageView (FacebookFadeIn)
-- (void)setAndFadeInInFacebookImageWithURL:(NSURL *)url {
+- (void)setAndFadeInFacebookImageWithURL:(NSURL *)url {
     [self setAndFadeInFacebookImageWithURL:url placeholder:nil];
 }
 

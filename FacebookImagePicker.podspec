@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.author       = { "Deon Botha" => "deon@oceanlabs.co" }
   s.social_media_url = 'https://twitter.com/dbotha'
   s.homepage     = 'https://github.com/OceanLabs/FacebookImagePicker-iOS'
-  s.platform     = :ios, '5.0'
+  s.platform     = :ios, '6.0'
   s.requires_arc = true
   s.source = {
     :git => 'https://github.com/OceanLabs/FacebookImagePicker-iOS.git',
