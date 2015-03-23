@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source = {
     :git => 'https://github.com/OceanLabs/FacebookImagePicker-iOS.git',
-    :tag => '~> 1.0.1'
+    :tag => '1.0.1'
   }
   s.source_files = ['OL*.{h,m}', 'UIImageView+FacebookFadeIn.{h,m}']
   s.resources = ['FacebookImagePicker.xcassets', '*.xib']
