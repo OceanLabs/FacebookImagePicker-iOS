@@ -7,7 +7,7 @@
 //
 
 #import "OLFacebookImagePickerCell.h"
-#import <UIImageView+FadeIn.h>
+#import "UIImageView+FacebookFadeIn.h"
 #import "OLFacebookImage.h"
 
 #define kThumbnailLength    78.0f
@@ -70,7 +70,7 @@ static UIColor *disabledColor;
 
 - (void)bind:(OLFacebookImage *)media {
     self.facebookImage = media;
-    [self.imageView setAndFadeInImageWithURL:[media bestURLForSize:CGSizeMake(220, 220)]]; // opted for slightly larger than thumb url. Might be better for performance just to go with thumb.
+    [self.imageView setAndFadeInFacebookImageWithURL:[media bestURLForSize:CGSizeMake(220, 220)]]; // opted for slightly larger than thumb url. Might be better for performance just to go with thumb.
 }
 
 - (void)setSelected:(BOOL)selected {

@@ -10,7 +10,7 @@
 #import "OLFacebookAlbumRequest.h"
 #import "OLFacebookAlbum.h"
 #import "OLPhotoViewController.h"
-#import <UIImageView+FadeIn.h>
+#import "UIImageView+FacebookFadeIn.h"
 
 static const NSUInteger kAlbumPreviewImageSize = 78;
 
@@ -26,10 +26,10 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
         placeholderImage = [UIImage imageNamed:@"album_placeholder"];
     }
     
-    [self.imageView setAndFadeInImageWithURL:album.coverPhotoURL placeholder:placeholderImage];
+    [self.imageView setAndFadeInFacebookImageWithURL:album.coverPhotoURL placeholder:placeholderImage];
     self.imageView.clipsToBounds = YES;
     self.textLabel.text         = album.name;
-    self.detailTextLabel.text   = [NSString stringWithFormat:@"%d", album.photoCount];
+    self.detailTextLabel.text   = [NSString stringWithFormat:@"%lu", (unsigned long)album.photoCount];
     self.accessoryType          = UITableViewCellAccessoryDisclosureIndicator;
 }
 
