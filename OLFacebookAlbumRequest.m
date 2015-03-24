@@ -41,7 +41,7 @@
 - (void)getAlbums:(OLFacebookAlbumRequestHandler)handler {
     __block BOOL runOnce = NO;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",  @"user_photos"]
+    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile",  @"user_photos"]
                                        allowLoginUI:YES
                                   completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
                                       [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

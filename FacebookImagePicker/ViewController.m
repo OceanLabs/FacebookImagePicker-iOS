@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"basic_info",  @"user_photos"]];
+    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile",  @"user_photos"]];
     CGRect f = loginView.frame;
     f.origin.x = (self.view.frame.size.width - f.size.width) / 2;
     f.origin.y = (self.view.frame.size.height - f.size.height) / 2;
