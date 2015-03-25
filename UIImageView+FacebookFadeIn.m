@@ -22,7 +22,7 @@
     
     self.alpha = 0;
     __weak UIImageView *weakImageView = self;
-    [self setImageWithURL:url placeholderImage:placeholder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+    [self sd_setImageWithURL:url placeholderImage:placeholder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         struct timeval t;
         gettimeofday(&t, NULL);
         long elapsedTimeMillis = (t.tv_sec * 1000 + t.tv_usec / 1000) - msec;
