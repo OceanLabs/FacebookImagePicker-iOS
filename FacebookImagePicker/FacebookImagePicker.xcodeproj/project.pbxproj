@@ -218,7 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				CD73BEDA185E21840009DE03 /* FacebookImagePicker */,
-				CD9AF173185E206A00A56B3F /* Example */,
+				CD9AF173185E206A00A56B3F /* Sample App */,
 				CD9AF192185E206A00A56B3F /* FacebookImagePickerTests */,
 				CD9AF16C185E206A00A56B3F /* Frameworks */,
 				CD9AF16B185E206A00A56B3F /* Products */,
@@ -247,7 +247,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		CD9AF173185E206A00A56B3F /* Example */ = {
+		CD9AF173185E206A00A56B3F /* Sample App */ = {
 			isa = PBXGroup;
 			children = (
 				CD9AF17C185E206A00A56B3F /* AppDelegate.h */,
@@ -258,7 +258,7 @@
 				CD9AF185185E206A00A56B3F /* Images.xcassets */,
 				CD9AF174185E206A00A56B3F /* Supporting Files */,
 			);
-			name = Example;
+			name = "Sample App";
 			path = FacebookImagePicker;
 			sourceTree = "<group>";
 		};
@@ -349,6 +349,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Deon Botha";
 				TargetAttributes = {
+					CD9AF169185E206A00A56B3F = {
+						DevelopmentTeam = 52629Y9DP9;
+					};
 					CD9AF18A185E206A00A56B3F = {
 						TestTargetID = CD9AF169185E206A00A56B3F;
 					};
@@ -575,6 +578,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FacebookImagePicker/FacebookImagePicker-Prefix.pch";
 				INFOPLIST_FILE = "FacebookImagePicker/FacebookImagePicker-Info.plist";
@@ -589,6 +593,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FacebookImagePicker/FacebookImagePicker-Prefix.pch";
 				INFOPLIST_FILE = "FacebookImagePicker/FacebookImagePicker-Info.plist";
