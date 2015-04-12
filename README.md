@@ -25,6 +25,8 @@ You need to have set up your application correctly to work with Facebook as per 
 To launch the Facebook Image Picker:
 
 ```objective-c
+#import <OLFacebookImagePickerController.h>
+
 OLFacebookImagePickerController *picker = [[OLFacebookImagePickerController alloc] init];
 picker.delegate = self;
 [self presentViewController:picker animated:YES completion:nil];
