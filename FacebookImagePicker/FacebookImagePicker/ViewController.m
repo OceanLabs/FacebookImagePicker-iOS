@@ -51,10 +51,12 @@
 - (void)facebookImagePicker:(OLFacebookImagePickerController *)imagePicker didFinishPickingImages:(NSArray/*<OLFacebookImage>*/ *)images {
     [self dismissViewControllerAnimated:YES completion:nil];
     self.selected = images;
+    NSLog(@"User did pick %lu images", (unsigned long) images.count);
 }
 
 - (void)facebookImagePickerDidCancelPickingImages:(OLFacebookImagePickerController *)imagePicker {
     [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"User cancelled facebook image picking");
 }
 
 

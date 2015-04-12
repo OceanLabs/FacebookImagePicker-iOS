@@ -15,6 +15,8 @@
 
 @implementation OLFacebookImagePickerController
 
+@dynamic delegate;
+
 - (id)init {
     OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
     if (self = [super initWithRootViewController:albumController]) {
