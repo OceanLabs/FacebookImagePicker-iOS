@@ -165,17 +165,8 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
         return;
     }
     
-    OLFacebookImagePickerController *vc = (OLFacebookImagePickerController*) self.navigationController;
-    NSString *format;
-    if (vc.maximumNumberOfSelection > 0){
-        format = (indexPaths.count > 1) ? NSLocalizedString(@"%ld of %ld Photos Selected", nil) : NSLocalizedString(@"%ld of %ld Photo Selected", nil);
-    }
-    else{
-        format = (indexPaths.count > 1) ? NSLocalizedString(@"%ld Photos Selected", nil) : NSLocalizedString(@"%ld Photo Selected", nil);
-    }
-    
-    
-    self.title = vc.maximumNumberOfSelection == 0 ? [NSString stringWithFormat:format, (long)indexPaths.count] : [NSString stringWithFormat:format, (long)indexPaths.count, vc.maximumNumberOfSelection];
+    NSString *format = (indexPaths.count > 1) ? NSLocalizedString(@"%ld Photos Selected", nil) : NSLocalizedString(@"%ld Photo Selected", nil);
+    self.title = [NSString stringWithFormat:format, (unsigned long)indexPaths.count];
 }
 
 #pragma mark - UICollectionViewDataSource methods
@@ -202,29 +193,6 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
         // we've reached the bottom, lets load the next page of facebook images.
         [self loadNextPage];
     }
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    OLFacebookImage *image = [self.photos objectAtIndex:indexPath.item];
-    
-    OLFacebookImagePickerController *vc = (OLFacebookImagePickerController*) self.navigationController;
-    
-    CGSize max= CGSizeZero;
-    for (OLFacebookImageURL *url in image.sourceImages){
-        if (fmax(max.width, max.height) < fmax(url.imageSize.height, url.imageSize.width)){
-            max = url.imageSize;
-        }
-    }
-    
-    if (fmin(max.height, max.width) < vc.minimumNumberOfPixelsForSmallerDimension){
-        NSString *message = [NSString stringWithFormat:@"The size of the image you selected is too small. Please select a photo taken from the back camera of your %@ or other high-quality source.\n\nMust be at least %ldpx by %ldpx\nThis is %.00fpx by %.00fpx", [UIDevice currentDevice].localizedModel, vc.minimumNumberOfPixelsForSmallerDimension, vc.minimumNumberOfPixelsForSmallerDimension, max.width, max.height];
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Quality Matters!", @"") message:NSLocalizedString(message, @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-        [av show];
-        return NO;
-    }
-    
-    
-    return collectionView.indexPathsForSelectedItems.count < vc.maximumNumberOfSelection || vc.maximumNumberOfSelection == 0;
 }
 
 -(void) collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{

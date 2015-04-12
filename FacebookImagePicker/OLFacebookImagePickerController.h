@@ -26,12 +26,6 @@
  */
 @interface OLFacebookImagePickerController : UINavigationController
 
-/// The maximum number of assets to be picked.
-@property (nonatomic, assign) NSInteger maximumNumberOfSelection;
-
-/// The minimum number of pixels for the smaller dimension of the image.
-@property (assign, nonatomic) NSUInteger minimumNumberOfPixelsForSmallerDimension;
-
 /**
  The image picker’s delegate object.
  */
