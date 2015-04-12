@@ -48,4 +48,11 @@ Implement the `OLFacebookImagePickerControllerDelegate` protocol:
 
 ```
 
+### Sample Apps
+The project is bundled with a Sample App to highlight the libraries usage. Alternatively you can see the library in action in the following iOS apps:
+
+* [HuggleUp](https://itunes.apple.com/gb/app/huggleup-photo-printing-personalised/id977579943?mt=8)
+* Get in touch to list your app here
+
 ## License
+This project is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
