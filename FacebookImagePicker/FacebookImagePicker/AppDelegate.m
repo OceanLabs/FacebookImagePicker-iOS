@@ -7,16 +7,17 @@
 //
 
 #import "AppDelegate.h"
-#import <FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    return YES;
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                    didFinishLaunchingWithOptions:launchOptions];
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -50,8 +51,10 @@
          annotation:(id)annotation {
     
     // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
-    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-    
+    BOOL wasHandled = [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                                     openURL:url
+                                                           sourceApplication:sourceApplication
+                                                                  annotation:annotation];
     // You can add your app-specific url handling code here if needed
     
     return wasHandled;
