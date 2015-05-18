@@ -27,14 +27,6 @@
     return self;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return toInterfaceOrientation == UIInterfaceOrientationPortrait;
-}
-
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
 - (void)setSelected:(NSArray *)selected {
     self.albumVC.selected = selected;
 }
