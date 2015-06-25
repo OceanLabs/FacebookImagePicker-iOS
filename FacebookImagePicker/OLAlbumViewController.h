@@ -16,6 +16,7 @@
 - (void)albumViewController:(OLAlbumViewController *)albumController didFailWithError:(NSError *)error;
 @optional
 - (void)albumViewController:(OLAlbumViewController *)albumController didSelectImage:(OLFacebookImage *)image;
+- (BOOL)albumViewController:(OLAlbumViewController *)albumController shouldSelectImage:(OLFacebookImage *)image;
 @end
 
 @interface OLAlbumViewController : UIViewController

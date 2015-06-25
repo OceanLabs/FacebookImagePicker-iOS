@@ -218,4 +218,13 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     }
 }
 
+- (BOOL)photoViewController:(OLPhotoViewController *)photoController shouldSelectImage:(OLFacebookImage *)image{
+    if ([self.delegate respondsToSelector:@selector(albumViewController:shouldSelectImage:)]){
+        return [self.delegate albumViewController:self shouldSelectImage:image];
+    }
+    else{
+        return YES;
+    }
+}
+
 @end

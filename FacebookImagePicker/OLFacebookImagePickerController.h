@@ -17,6 +17,7 @@
 - (void)facebookImagePickerDidCancelPickingImages:(OLFacebookImagePickerController *)imagePicker;
 @optional
 - (void)facebookImagePicker:(OLFacebookImagePickerController *)imagePicker didSelectImage:(OLFacebookImage *)image;
+- (BOOL)facebookImagePicker:(OLFacebookImagePickerController *)imagePicker shouldSelectImage:(OLFacebookImage *)image;
 @end
 
 

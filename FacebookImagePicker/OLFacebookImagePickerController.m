@@ -51,4 +51,13 @@
     }
 }
 
+- (BOOL)albumViewController:(OLAlbumViewController *)albumController shouldSelectImage:(OLFacebookImage *)image{
+    if ([self.delegate respondsToSelector:@selector(facebookImagePicker:shouldSelectImage:)]){
+        return [self.delegate facebookImagePicker:self shouldSelectImage:image];
+    }
+    else{
+        return YES;
+    }
+}
+
 @end

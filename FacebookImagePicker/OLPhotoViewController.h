@@ -17,6 +17,7 @@
 - (void)photoViewController:(OLPhotoViewController *)photoController didFailWithError:(NSError *)error;
 @optional
 - (void)photoViewController:(OLPhotoViewController *)photoController didSelectImage:(OLFacebookImage *)image;
+- (BOOL)photoViewController:(OLPhotoViewController *)photoController shouldSelectImage:(OLFacebookImage *)image;
 @end
 
 @interface OLPhotoViewController : UIViewController
