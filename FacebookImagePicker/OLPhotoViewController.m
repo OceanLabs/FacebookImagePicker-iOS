@@ -201,6 +201,9 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
 
 -(void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [self updateTitleWithSelectedIndexPaths:collectionView.indexPathsForSelectedItems];
+    if ([self.delegate respondsToSelector:@selector(photoViewController:didSelectImage:)]){
+        [self.delegate photoViewController:self didSelectImage:[self.photos objectAtIndex:indexPath.item]];
+    }
 }
 
 @end

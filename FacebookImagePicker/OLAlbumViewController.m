@@ -212,4 +212,10 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     [self.delegate albumViewController:self didFailWithError:error];
 }
 
+- (void)photoViewController:(OLPhotoViewController *)photoController didSelectImage:(OLFacebookImage *)image{
+    if ([self.delegate respondsToSelector:@selector(albumViewController:didSelectImage:)]){
+        [self.delegate albumViewController:self didSelectImage:image];
+    }
+}
+
 @end

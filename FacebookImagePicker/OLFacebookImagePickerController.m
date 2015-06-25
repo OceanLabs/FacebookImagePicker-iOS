@@ -45,4 +45,10 @@
     [self.delegate facebookImagePicker:self didFailWithError:error];
 }
 
+- (void)albumViewController:(OLAlbumViewController *)albumController didSelectImage:(OLFacebookImage *)image{
+    if ([self.delegate respondsToSelector:@selector(facebookImagePicker:didSelectImage:)]){
+        [self.delegate facebookImagePicker:self didSelectImage:image];
+    }
+}
+
 @end
