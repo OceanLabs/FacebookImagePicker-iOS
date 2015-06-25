@@ -142,7 +142,6 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     if (self.photoViewController) {
         // we're coming back from a photo view so update the selected to reflect any changes the user made
         self.selected = self.photoViewController.selected;
-        self.photoViewController = nil;
     }
 }
 
@@ -213,9 +212,14 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 }
 
 - (void)photoViewController:(OLPhotoViewController *)photoController didSelectImage:(OLFacebookImage *)image{
+    [self updateSelectedFromPhotoViewController];
     if ([self.delegate respondsToSelector:@selector(albumViewController:didSelectImage:)]){
         [self.delegate albumViewController:self didSelectImage:image];
     }
+}
+
+- (void)photoViewController:(OLPhotoViewController *)photoController didDeSelectImage:(OLFacebookImage *)image{
+    [self updateSelectedFromPhotoViewController];
 }
 
 - (BOOL)photoViewController:(OLPhotoViewController *)photoController shouldSelectImage:(OLFacebookImage *)image{
