@@ -4,6 +4,10 @@ A Facebook image picker providing a simple UI for a user to pick photos from a u
 
 It takes care of all authentication with Facebook as and when necessary. It will automatically renew auth tokens or prompt the user to re-authorize the app if needed. 
 
+## Video Preview
+
+[![Preview](https://github.com/OceanLabs/InstagramPhotoPicker-Android/raw/master/screenshot.png)](https://vimeo.com/135687088)
+
 ## Requirements
 
 * Xcode 6 and iOS SDK 7
