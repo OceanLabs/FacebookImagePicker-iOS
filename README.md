@@ -6,7 +6,7 @@ It takes care of all authentication with Facebook as and when necessary. It will
 
 ## Video Preview
 
-[![Preview](https://github.com/OceanLabs/FacebookImagePicker-iOS/raw/master/screenshot.png)](https://vimeo.com/135687088)
+[![Preview](https://github.com/OceanLabs/FacebookImagePicker-iOS/raw/master/preview.png)](https://vimeo.com/135687088)
 
 ## Requirements
 
