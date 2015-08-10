@@ -7,7 +7,7 @@
 //
 
 #import "OLFacebookPhotosForAlbumRequest.h"
-#import <FacebookSDK.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "OLFacebookAlbum.h"
 #import "OLFacebookImage.h"
 #import "OLFacebookImagePickerConstants.h"

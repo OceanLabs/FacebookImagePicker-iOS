@@ -9,7 +9,7 @@
 #import "OLFacebookAlbumRequest.h"
 #import "OLFacebookImagePickerConstants.h"
 #import "OLFacebookAlbum.h"
-#import <FacebookSDK.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface OLFacebookAlbumRequest ()
 @property (nonatomic, assign) BOOL cancelled;
