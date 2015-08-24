@@ -86,11 +86,10 @@
                                                   
                                                   id albumId     = [album objectForKey:@"id"];
                                                   id photoCount  = [album objectForKey:@"count"];
-                                                  id coverPhoto  = [album objectForKey:@"cover_photo"];
                                                   id name        = [album objectForKey:@"name"];
                                                   
                                                   if (!([albumId isKindOfClass:[NSString class]] && [photoCount isKindOfClass:[NSNumber class]]
-                                                        && [coverPhoto isKindOfClass:[NSString class]] && [name isKindOfClass:[NSString class]])) {
+                                                         && [name isKindOfClass:[NSString class]])) {
                                                       continue;
                                                   }
                                                   
