@@ -7,13 +7,13 @@
 //
 
 #import "ViewController.h"
-#import <FacebookSDK.h>
 #import "OLFacebookAlbumRequest.h"
 #import "OLFacebookPhotosForAlbumRequest.h"
 #import "OLFacebookAlbum.h"
 #import "OLFacebookImage.h"
 #import "OLFacebookImagePickerController.h"
-#import <FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface ViewController () <UINavigationControllerDelegate, OLFacebookImagePickerControllerDelegate>
 @property (nonatomic, strong) OLFacebookAlbumRequest *albumRequest;
@@ -25,12 +25,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile",  @"user_photos"]];
-    CGRect f = loginView.frame;
+    FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
+    loginButton.readPermissions = @[@"public_profile",  @"user_photos"];
+    CGRect f = loginButton.frame;
     f.origin.x = (self.view.frame.size.width - f.size.width) / 2;
     f.origin.y = (self.view.frame.size.height - f.size.height) / 2;
-    loginView.frame = f;
-    [self.view addSubview:loginView];
+    loginButton.frame = f;
+    [self.view addSubview:loginButton];
 }
 
 - (IBAction)onButtonFacebookImagePickerClicked:(id)sender {

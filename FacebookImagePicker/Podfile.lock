@@ -1,23 +1,32 @@
 PODS:
-  - Bolts (1.2.0):
-    - Bolts/AppLinks (= 1.2.0)
-    - Bolts/Tasks (= 1.2.0)
-  - Bolts/AppLinks (1.2.0):
-    - Bolts/Tasks
-  - Bolts/Tasks (1.2.0)
-  - Facebook-iOS-SDK (3.23.2):
+  - Bolts (1.1.4)
+  - Facebook-iOS-SDK (4.0.1):
     - Bolts (~> 1.0)
-  - SDWebImage (3.7.3):
-    - SDWebImage/Core (= 3.7.3)
-  - SDWebImage/Core (3.7.3)
+    - Facebook-iOS-SDK/CoreKit (= 4.0.1)
+    - Facebook-iOS-SDK/LoginKit (= 4.0.1)
+    - Facebook-iOS-SDK/ShareKit (= 4.0.1)
+  - Facebook-iOS-SDK/CoreKit (4.0.1):
+    - Bolts (~> 1.0)
+    - Facebook-iOS-SDK/CoreKit/no-arc (= 4.0.1)
+  - Facebook-iOS-SDK/CoreKit/no-arc (4.0.1):
+    - Bolts (~> 1.0)
+  - Facebook-iOS-SDK/LoginKit (4.0.1):
+    - Bolts (~> 1.0)
+    - Facebook-iOS-SDK/CoreKit
+  - Facebook-iOS-SDK/ShareKit (4.0.1):
+    - Bolts (~> 1.0)
+    - Facebook-iOS-SDK/CoreKit
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
 
 DEPENDENCIES:
-  - Facebook-iOS-SDK (~> 3.23.2)
+  - Facebook-iOS-SDK (~> 4.0.1)
   - SDWebImage (~> 3.7.2)
 
 SPEC CHECKSUMS:
-  Bolts: d176cb1e0012175589e389a9db49b85e27787576
-  Facebook-iOS-SDK: cd87f0b2f0c1d9574b44e8fa2baacc275524bac3
-  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  Bolts: f8e2f94edbf9fec7bb8de5ecaaa3aa6b7de6f64e
+  Facebook-iOS-SDK: 6d05532c97e9c542f8d87f94b7f6ee217493d00b
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
 
 COCOAPODS: 0.38.2

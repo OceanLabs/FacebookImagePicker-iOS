@@ -7,10 +7,10 @@
 //
 
 #import "OLFacebookPhotosForAlbumRequest.h"
-#import <FacebookSDK/FacebookSDK.h>
 #import "OLFacebookAlbum.h"
 #import "OLFacebookImage.h"
 #import "OLFacebookImagePickerConstants.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @interface OLFacebookPhotosForAlbumRequest ()
 @property (nonatomic, assign) BOOL cancelled;
@@ -22,12 +22,8 @@
 
 + (void)handleFacebookError:(NSError *)error completionHandler:(OLFacebookPhotosForAlbumRequestHandler)handler {
     NSString *message;
-    if ([FBErrorUtility shouldNotifyUserForError:error]) {
-        message = [FBErrorUtility userMessageForError:error];
-    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
-        message = @"Your current Facebook session is no longer valid. Please log in again.";
-    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-        message = @"The app requires authorization to access your Facebook photos to continue. Please open Settings and provide access.";
+    if ([error.userInfo objectForKey:@"FBSDKErrorLocalizedDescriptionKey"]) {
+        message = [error.userInfo objectForKey:@"FBSDKErrorLocalizedDescriptionKey"];
     } else {
         message = @"Failed to access your Facebook photos. Please check your internet connectivity and try again.";
     }
@@ -54,95 +50,82 @@
 }
 
 - (void)getPhotos:(OLFacebookPhotosForAlbumRequestHandler)handler {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __block BOOL runOnce = NO;
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile",  @"user_photos"]
-                                       allowLoginUI:YES
-                                  completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
-                                      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                                      if (runOnce || self.cancelled) {
-                                          return;
-                                      }
-                                      
-                                      runOnce = YES;
-                                      if (error) {
-                                          [OLFacebookPhotosForAlbumRequest handleFacebookError:error completionHandler:handler];
-                                          return;
-                                      } else if (!FB_ISSESSIONOPENWITHSTATE(state)) {
-                                          NSString *message = @"Failed to access your Facebook photos. Please check your internet connectivity and try again.";
-                                          handler(nil, [NSError errorWithDomain:kOLErrorDomainFacebookImagePicker code:kOLErrorCodeFacebookImagePickerNoOpenSession userInfo:@{NSLocalizedDescriptionKey: message}], nil);
-                                      } else {
-                                          // connection is open, perform the request
-                                          NSString *graphPath = [NSString stringWithFormat:@"%@/photos?fields=picture,source,images&limit=100", self.album.albumId];
-                                          if (self.after) {
-                                              graphPath = [graphPath stringByAppendingFormat:@"&after=%@", self.after];
-                                          }
-                                          
-                                          [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-                                          [FBRequestConnection startWithGraphPath:graphPath completionHandler:^(FBRequestConnection *connection,
-                                                                                                                                                              id result,
-                                                                                                                                                              NSError *error) {
-
-                                              [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                                              if (self.cancelled) {
-                                                  return;
-                                              }
-  
-                                              NSString *parsingErrorMessage = @"Failed to parse Facebook Response. Please check your internet connectivity and try again.";
-                                              NSError *parsingError = [NSError errorWithDomain:kOLErrorDomainFacebookImagePicker code:kOLErrorCodeFacebookImagePickerBadResponse userInfo:@{NSLocalizedDescriptionKey: parsingErrorMessage}];
-                                              
-                                              id data = [result objectForKey:@"data"];
-                                              if (![data isKindOfClass:[NSArray class]]) {
-                                                  handler(nil, parsingError, nil);
-                                                  return;
-                                              }
-                                              
-                                              NSMutableArray *albumPhotos = [[NSMutableArray alloc] init];
-                                              for (id photo in data) {
-                                                  id thumbURLString = [photo objectForKey:@"picture"];
-                                                  id fullURLString  = [photo objectForKey:@"source"];
-                                                  
-                                                  if (!([thumbURLString isKindOfClass:[NSString class]] && [fullURLString isKindOfClass:[NSString class]])) {
-                                                      continue;
-                                                  }
-                                                  
-                                                  NSMutableArray *sourceImages = [[NSMutableArray alloc] init];
-                                                  if ([photo[@"images"] isKindOfClass:[NSArray class]]) {
-                                                      for (id image in photo[@"images"]) {
-                                                          id source = image[@"source"];
-                                                          id width = image[@"width"];
-                                                          id height = image[@"height"];
-                                                          if ([source isKindOfClass:[NSString class]] &&
-                                                              [width isKindOfClass:[NSNumber class]] &&
-                                                              [height isKindOfClass:[NSNumber class]]) {
-                                                              [sourceImages addObject:[[OLFacebookImageURL alloc] initWithURL:[NSURL URLWithString:source] size:CGSizeMake([width doubleValue], [height doubleValue])]];
-                                                          }
-                                                      }
-                                                  }
-                                                  
-                                                  OLFacebookImage *image = [[OLFacebookImage alloc] initWithThumbURL:[NSURL URLWithString:thumbURLString] fullURL:[NSURL URLWithString:fullURLString] albumId:self.album.albumId sourceImages:sourceImages];
-                                                  [albumPhotos addObject:image];
-                                              }
-                                              
-                                              // get next page cursor
-                                              OLFacebookPhotosForAlbumRequest *nextPageRequest = nil;
-                                              id paging = [result objectForKey:@"paging"];
-                                              if ([paging isKindOfClass:[NSDictionary class]]) {
-                                                  id cursors = [paging objectForKey:@"cursors"];
-                                                  id next = [paging objectForKey:@"next"]; // next will be non nil if a next page exists
-                                                  if (next && [cursors isKindOfClass:[NSDictionary class]]) {
-                                                      id after = [cursors objectForKey:@"after"];
-                                                      if ([after isKindOfClass:[NSString class]]) {
-                                                          nextPageRequest = [[OLFacebookPhotosForAlbumRequest alloc] initWithAlbum:self.album after:after];
-                                                      }
-                                                  }
-                                              }
-                                              
-                                              handler(albumPhotos, nil, nextPageRequest);
-                                          }];
-                                      }
-                                  }];
-
+    if ([FBSDKAccessToken currentAccessToken]) {
+        // connection is open, perform the request
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        NSString *graphPath = [NSString stringWithFormat:@"%@/photos?fields=picture,source,images&limit=100", self.album.albumId];
+        if (self.after) {
+            graphPath = [graphPath stringByAppendingFormat:@"&after=%@", self.after];
+        }
+        
+        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:graphPath parameters:nil];
+        [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            if (self.cancelled) {
+                return;
+            }
+            if (error) {
+                [OLFacebookPhotosForAlbumRequest handleFacebookError:error completionHandler:handler];
+                return;
+            }
+            
+            NSString *parsingErrorMessage = @"Failed to parse Facebook Response. Please check your internet connectivity and try again.";
+            NSError *parsingError = [NSError errorWithDomain:kOLErrorDomainFacebookImagePicker code:kOLErrorCodeFacebookImagePickerBadResponse userInfo:@{NSLocalizedDescriptionKey: parsingErrorMessage}];
+            
+            id data = [result objectForKey:@"data"];
+            if (![data isKindOfClass:[NSArray class]]) {
+                handler(nil, parsingError, nil);
+                return;
+            }
+            
+            NSMutableArray *albumPhotos = [[NSMutableArray alloc] init];
+            for (id photo in data) {
+                id thumbURLString = [photo objectForKey:@"picture"];
+                id fullURLString  = [photo objectForKey:@"source"];
+                
+                if (!([thumbURLString isKindOfClass:[NSString class]] && [fullURLString isKindOfClass:[NSString class]])) {
+                    continue;
+                }
+                
+                NSMutableArray *sourceImages = [[NSMutableArray alloc] init];
+                if ([photo[@"images"] isKindOfClass:[NSArray class]]) {
+                    for (id image in photo[@"images"]) {
+                        id source = image[@"source"];
+                        id width = image[@"width"];
+                        id height = image[@"height"];
+                        if ([source isKindOfClass:[NSString class]] &&
+                            [width isKindOfClass:[NSNumber class]] &&
+                            [height isKindOfClass:[NSNumber class]]) {
+                            [sourceImages addObject:[[OLFacebookImageURL alloc] initWithURL:[NSURL URLWithString:source] size:CGSizeMake([width doubleValue], [height doubleValue])]];
+                        }
+                    }
+                }
+                
+                OLFacebookImage *image = [[OLFacebookImage alloc] initWithThumbURL:[NSURL URLWithString:thumbURLString] fullURL:[NSURL URLWithString:fullURLString] albumId:self.album.albumId sourceImages:sourceImages];
+                [albumPhotos addObject:image];
+            }
+            
+            // get next page cursor
+            OLFacebookPhotosForAlbumRequest *nextPageRequest = nil;
+            id paging = [result objectForKey:@"paging"];
+            if ([paging isKindOfClass:[NSDictionary class]]) {
+                id cursors = [paging objectForKey:@"cursors"];
+                id next = [paging objectForKey:@"next"]; // next will be non nil if a next page exists
+                if (next && [cursors isKindOfClass:[NSDictionary class]]) {
+                    id after = [cursors objectForKey:@"after"];
+                    if ([after isKindOfClass:[NSString class]]) {
+                        nextPageRequest = [[OLFacebookPhotosForAlbumRequest alloc] initWithAlbum:self.album after:after];
+                    }
+                }
+            }
+            
+            handler(albumPhotos, nil, nextPageRequest);
+        }];
+    }
+    else {
+        NSString *message = @"No Facebook user authentication found.";
+        handler(nil, [NSError errorWithDomain:kOLErrorDomainFacebookImagePicker code:kOLErrorCodeFacebookImagePickerNoOpenSession userInfo:@{NSLocalizedDescriptionKey: message}], nil);
+    }
 }
 
 @end
