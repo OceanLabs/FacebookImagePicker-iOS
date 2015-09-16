@@ -1,2 +1,3 @@
-pod 'Facebook-iOS-SDK', '~> 4.0.1'
+pod 'FBSDKCoreKit', '~> 4.6.0'
+pod 'FBSDKLoginKit', '~> 4.6.0'
 pod 'SDWebImage', '~> 3.7.2'
