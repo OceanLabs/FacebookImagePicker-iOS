@@ -10,10 +10,15 @@
 
 @class OLPhotoViewController;
 @class OLFacebookAlbum;
+@class OLFacebookImage;
 
 @protocol OLPhotoViewControllerDelegate <NSObject>
 - (void)photoViewControllerDoneClicked:(OLPhotoViewController *)photoController;
 - (void)photoViewController:(OLPhotoViewController *)photoController didFailWithError:(NSError *)error;
+@optional
+- (void)photoViewController:(OLPhotoViewController *)photoController didSelectImage:(OLFacebookImage *)image;
+- (void)photoViewController:(OLPhotoViewController *)photoController didDeSelectImage:(OLFacebookImage *)image;
+- (BOOL)photoViewController:(OLPhotoViewController *)photoController shouldSelectImage:(OLFacebookImage *)image;
 @end
 
 @interface OLPhotoViewController : UIViewController

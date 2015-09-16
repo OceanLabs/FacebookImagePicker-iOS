@@ -9,10 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @class OLAlbumViewController;
+@class OLFacebookImage;
 
 @protocol OLAlbumViewControllerDelegate <NSObject>
 - (void)albumViewControllerDoneClicked:(OLAlbumViewController *)albumController;
 - (void)albumViewController:(OLAlbumViewController *)albumController didFailWithError:(NSError *)error;
+@optional
+- (void)albumViewController:(OLAlbumViewController *)albumController didSelectImage:(OLFacebookImage *)image;
+- (BOOL)albumViewController:(OLAlbumViewController *)albumController shouldSelectImage:(OLFacebookImage *)image;
 @end
 
 @interface OLAlbumViewController : UIViewController

@@ -9,11 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @class OLFacebookImagePickerController;
+@class OLFacebookImage;
 
 @protocol OLFacebookImagePickerControllerDelegate <NSObject>
 - (void)facebookImagePicker:(OLFacebookImagePickerController *)imagePicker didFailWithError:(NSError *)error;
 - (void)facebookImagePicker:(OLFacebookImagePickerController *)imagePicker didFinishPickingImages:(NSArray/*<OLFacebookImage>*/ *)images;
 - (void)facebookImagePickerDidCancelPickingImages:(OLFacebookImagePickerController *)imagePicker;
+@optional
+- (void)facebookImagePicker:(OLFacebookImagePickerController *)imagePicker didSelectImage:(OLFacebookImage *)image;
+- (BOOL)facebookImagePicker:(OLFacebookImagePickerController *)imagePicker shouldSelectImage:(OLFacebookImage *)image;
 @end
 
 
