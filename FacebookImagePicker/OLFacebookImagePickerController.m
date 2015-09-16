@@ -8,8 +8,8 @@
 
 #import "OLFacebookImagePickerController.h"
 #import "OLAlbumViewController.h"
-#import <FBSDKLoginKit.h>
-#import <FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @interface OLFacebookImagePickerController () <OLAlbumViewControllerDelegate>
 @property (nonatomic, strong) OLAlbumViewController *albumVC;
