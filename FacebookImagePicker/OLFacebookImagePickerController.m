@@ -25,7 +25,9 @@
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonClicked)];
     if (self = [super initWithRootViewController:vc]) {
-        
+        if ([FBSDKAccessToken currentAccessToken]){
+            [self showAlbumList];
+        }
     }
     
     return self;
@@ -55,10 +57,7 @@
                 } else if ([result isCancelled]) {
                     [self.delegate facebookImagePicker:self didFinishPickingImages:@[]];
                 } else {
-                    OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
-                    self.albumVC = albumController;
-                    self.albumVC.delegate = self;
-                    self.viewControllers = @[albumController];
+                    [self showAlbumList];
                 }
             });
         }
@@ -76,6 +75,13 @@
 //             }
 //         }];
     }
+}
+
+- (void)showAlbumList{
+    OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
+    self.albumVC = albumController;
+    self.albumVC.delegate = self;
+    self.viewControllers = @[albumController];
 }
 
 - (void)setSelected:(NSArray *)selected {
