@@ -8,12 +8,12 @@
 
 #import "OLFacebookImagePickerController.h"
 #import "OLAlbumViewController.h"
-#import <Bolts/Bolts.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
+//#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface OLFacebookImagePickerController () <OLAlbumViewControllerDelegate>
 @property (nonatomic, strong) OLAlbumViewController *albumVC;
+@property (assign, nonatomic) BOOL haveSeenViewDidAppear;
 @end
 
 @implementation OLFacebookImagePickerController
@@ -36,22 +36,45 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    if (![FBSDKAccessToken currentAccessToken]){
-        FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-        [login
-         logInWithReadPermissions: @[@"public_profile"] fromViewController:self
-         handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-             if (error) {
-                 [self.delegate facebookImagePicker:self didFailWithError:error];
-             } else if (result.isCancelled) {
-                [self.delegate facebookImagePicker:self didFinishPickingImages:@[]];
-             } else {
-                 OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
-                 self.albumVC = albumController;
-                 self.albumVC.delegate = self;
-                 self.viewControllers = @[albumController];
-             }
-         }];
+    if (![FBSDKAccessToken currentAccessToken] && !self.haveSeenViewDidAppear){
+        self.haveSeenViewDidAppear = YES;
+        
+        //Workaround so that we dont include FBSDKLoginKit
+        NSArray *permissions = [NSArray arrayWithObject:@"public_profile"];
+        Class FBSDKLoginManagerClass = NSClassFromString (@"FBSDKLoginManager");
+        id login = [[FBSDKLoginManagerClass alloc] init];
+        
+        SEL aSelector = NSSelectorFromString(@"logInWithReadPermissions:fromViewController:handler:");
+        
+        if([login respondsToSelector:aSelector]) {
+            IMP imp = [login methodForSelector:aSelector];
+            id (*func)(id, SEL, id, id, id) = (void *)imp;
+            func(login, aSelector, permissions, self, ^(id result, NSError *error) {
+                if (error) {
+                    [self.delegate facebookImagePicker:self didFailWithError:error];
+                } else if ([result isCancelled]) {
+                    [self.delegate facebookImagePicker:self didFinishPickingImages:@[]];
+                } else {
+                    OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
+                    self.albumVC = albumController;
+                    self.albumVC.delegate = self;
+                    self.viewControllers = @[albumController];
+                }
+            });
+        }
+//        [login logInWithReadPermissions: @[@"public_profile"] fromViewController:self
+//         handler:^(id result, NSError *error) {
+//             if (error) {
+//                 [self.delegate facebookImagePicker:self didFailWithError:error];
+//             } else if ([result isCancelled]) {
+//                [self.delegate facebookImagePicker:self didFinishPickingImages:@[]];
+//             } else {
+//                 OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
+//                 self.albumVC = albumController;
+//                 self.albumVC.delegate = self;
+//                 self.viewControllers = @[albumController];
+//             }
+//         }];
     }
 }
 
