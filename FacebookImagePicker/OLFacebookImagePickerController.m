@@ -42,7 +42,7 @@
         self.haveSeenViewDidAppear = YES;
         
         //Workaround so that we dont include FBSDKLoginKit
-        NSArray *permissions = [NSArray arrayWithObject:@"public_profile"];
+        NSArray *permissions = @[@"public_profile", @"user_photos"];
         Class FBSDKLoginManagerClass = NSClassFromString (@"FBSDKLoginManager");
         id login = [[FBSDKLoginManagerClass alloc] init];
         
