@@ -54,6 +54,18 @@ Implement the `OLFacebookImagePickerControllerDelegate` protocol:
 
 ```
 
+**Set maximum number of selections**
+
+Limit the number of assets to be picked.
+```` objective-c
+- (BOOL)facebookImagePicker:(OLFacebookImagePickerController *)imagePicker shouldSelectImage:(OLFacebookImage *)image
+{
+    // Allow 10 assets to be picked
+    return (imagePicker.selected.count < 10);
+}
+````
+
+
 ### Sample Apps
 The project is bundled with a Sample App to highlight the libraries usage. Alternatively you can see the library in action in the following iOS apps:
 
