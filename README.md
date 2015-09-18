@@ -55,6 +55,39 @@ Implement the `OLFacebookImagePickerControllerDelegate` protocol:
 
 ```
 
+## App Transport Security
+Xcode 7 and iOS 9 includes some new security features. In order to connect to Facebook you will need to add some more exceptions to your project's info plist file (in addition to the ones that your project might require).
+We need to add forward secrecy exceptions for Facebooks's CDNs. The following is what you need to copy your app's info plist, which includes anything that is needed by Kite as well:
+```
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>akamaihd.net</key>
+			<dict>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>facebook.com</key>
+			<dict>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>fbcdn.net</key>
+			<dict>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+```
+
 **Set maximum number of selections**
 
 Limit the number of assets to be picked.
