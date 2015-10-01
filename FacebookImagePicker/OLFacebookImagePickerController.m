@@ -49,9 +49,8 @@
         SEL aSelector = NSSelectorFromString(@"logInWithReadPermissions:fromViewController:handler:");
         
         if([login respondsToSelector:aSelector]) {
-            IMP imp = [login methodForSelector:aSelector];
-            id (*func)(id, SEL, id, id, id) = (void *)imp;
-            func(login, aSelector, permissions, self, ^(id result, NSError *error) {
+            void (*imp)(id, SEL, id, id, id) = (void(*)(id,SEL,id,id, id))[login methodForSelector:aSelector];
+            if( imp ) imp(login, aSelector, permissions, self, ^(id result, NSError *error) {
                 if (error) {
                     [self.delegate facebookImagePicker:self didFailWithError:error];
                 } else if ([result isCancelled]) {
@@ -61,19 +60,6 @@
                 }
             });
         }
-//        [login logInWithReadPermissions: @[@"public_profile"] fromViewController:self
-//         handler:^(id result, NSError *error) {
-//             if (error) {
-//                 [self.delegate facebookImagePicker:self didFailWithError:error];
-//             } else if ([result isCancelled]) {
-//                [self.delegate facebookImagePicker:self didFinishPickingImages:@[]];
-//             } else {
-//                 OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
-//                 self.albumVC = albumController;
-//                 self.albumVC.delegate = self;
-//                 self.viewControllers = @[albumController];
-//             }
-//         }];
     }
 }
 
