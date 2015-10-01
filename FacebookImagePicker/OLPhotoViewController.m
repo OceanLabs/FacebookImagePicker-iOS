@@ -35,7 +35,8 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
 @implementation OLPhotoViewController
 
 - (id)initWithAlbum:(OLFacebookAlbum *)album {
-    if (self = [super init]) {
+    NSBundle *currentBundle = [NSBundle bundleForClass:[OLPhotoViewController class]];
+    if (self = [self initWithNibName:NSStringFromClass([OLPhotoViewController class]) bundle:currentBundle]) {
         self.album = album;
         self.title = album.name;
         self.photos = [[NSMutableArray alloc] init];

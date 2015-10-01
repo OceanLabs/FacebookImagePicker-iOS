@@ -23,7 +23,14 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 - (void)setAlbum:(OLFacebookAlbum *)album {
     static UIImage *placeholderImage = nil;
     if (!placeholderImage) {
-        placeholderImage = [UIImage imageNamed:@"album_placeholder"];
+        if ([UIImage respondsToSelector:@selector(imageNamed:inBundle:compatibleWithTraitCollection:)])
+        {
+            placeholderImage = [UIImage imageNamed:@"album_placeholder" inBundle:[NSBundle bundleForClass:[OLAlbumViewController class]] compatibleWithTraitCollection:nil];
+        }
+        else
+        {
+            placeholderImage = [UIImage imageNamed:@"album_placeholder"];
+        }
     }
     
     [self.imageView setAndFadeInFacebookImageWithURL:album.coverPhotoURL placeholder:placeholderImage];
@@ -65,7 +72,8 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 @implementation OLAlbumViewController
 
 - (id)init {
-    if (self = [super init]) {
+    NSBundle *currentBundle = [NSBundle bundleForClass:[OLAlbumViewController class]];
+    if (self = [self initWithNibName:NSStringFromClass([OLAlbumViewController class]) bundle:currentBundle]) {
         self.title = @"Photos";
         self.albums = [[NSMutableArray alloc] init];
     }
