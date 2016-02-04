@@ -46,6 +46,11 @@
  */
 @property (nonatomic, readonly) NSString *albumId;
 
+/**
+ The Facebook photo ID
+ */
+@property (nonatomic, readonly) NSString *photoId;
+
 @property (nonatomic, readonly) NSArray/*<OLFacebookImageURL>*/ *sourceImages;
 
 @end

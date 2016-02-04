@@ -60,6 +60,7 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
         _fullURL = fullURL;
         _albumId = albumId;
         _sourceImages = sourceImages;
+        _photoId = [self extractPhotoIdFromUrl:fullURL];
     }
     
     return self;
@@ -92,6 +93,22 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
 
 - (NSUInteger)hash {
     return 37 * (37 * self.thumbURL.hash + self.fullURL.hash) + self.albumId.hash;
+}
+
+- (NSString *)extractPhotoIdFromUrl:(NSURL *)URL
+{
+    NSError *error = nil;
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern: @"_([0-9]{10}[0-9]+)_"
+                                  options: NSRegularExpressionCaseInsensitive
+                                  error: &error];
+    
+    NSString *urlString= [URL absoluteString];
+    NSTextCheckingResult *regexResult = [regex firstMatchInString:urlString options:0 range:NSMakeRange(0, urlString.length)];
+    
+    NSString *subString = [urlString substringWithRange:regexResult.range];
+    
+    return [subString substringWithRange: NSMakeRange(1, subString.length-2)];
 }
 
 #pragma mark - NSCoding protocol methods
