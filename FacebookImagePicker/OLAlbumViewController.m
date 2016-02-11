@@ -11,6 +11,9 @@
 #import "OLFacebookAlbum.h"
 #import "OLPhotoViewController.h"
 #import "UIImageView+FacebookFadeIn.h"
+#import <FBSDKLoginKit/FBSDKLoginManager.h>
+#import <FBSDKCoreKit/FBSDKAccessToken.h>
+#import <FBSDKCoreKit/FBSDKGraphRequest.h>
 
 static const NSUInteger kAlbumPreviewImageSize = 78;
 
@@ -84,6 +87,9 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(onButtonDoneClicked)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonLogoutClicked)];
+    
     self.albumRequestForNextPage = [[OLFacebookAlbumRequest alloc] init];
     [self loadNextAlbumPage];
     
@@ -154,6 +160,11 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 }
 
 - (void)onButtonDoneClicked {
+    [self.delegate albumViewControllerDoneClicked:self];
+}
+
+- (void)onButtonLogoutClicked {
+    [[FBSDKLoginManager new] logOut];
     [self.delegate albumViewControllerDoneClicked:self];
 }
 
