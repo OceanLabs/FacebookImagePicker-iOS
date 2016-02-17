@@ -11,6 +11,7 @@
 static NSString *const kKeyThumbURL = @"co.oceanlabs.FacebookImagePicker.kKeyThumbURL";
 static NSString *const kKeyFullURL = @"co.oceanlabs.FacebookImagePicker.kKeyFullURL";
 static NSString *const kKeyAlbumId = @"co.oceanlabs.FacebookImagePicker.kKeyAlbumId";
+static NSString *const kKeyUid = @"co.oceanlabs.FacebookImagePicker.kKeyUid";
 static NSString *const kKeySourceImages = @"co.oceanlabs.FacebookImagePicker.kKeySourceImages";
 
 static NSString *const kKeyURL = @"co.oceanlabs.FacebookImagePicker.kKeyURL";
@@ -54,11 +55,12 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
 @end
 
 @implementation OLFacebookImage
-- (id)initWithThumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL albumId:(NSString *)albumId sourceImages:(NSArray/*<OLFacebookImageURL>*/ *)sourceImages {
+- (id)initWithThumbURL:(NSURL *)thumbURL fullURL:(NSURL *)fullURL albumId:(NSString *)albumId uid:(NSString *)uid sourceImages:(NSArray/*<OLFacebookImageURL>*/ *)sourceImages {
     if (self = [super init]) {
         _thumbURL = thumbURL;
         _fullURL = fullURL;
         _albumId = albumId;
+        _uid = uid;
         _sourceImages = sourceImages;
     }
     
@@ -87,11 +89,11 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
         return NO;
     }
     
-    return [self.thumbURL isEqual:[object thumbURL]] && [self.fullURL isEqual:[object fullURL]] && [self.albumId isEqualToString:[object albumId]];
+    return [self.uid isEqualToString:[object uid]];
 }
 
 - (NSUInteger)hash {
-    return 37 * (37 * self.thumbURL.hash + self.fullURL.hash) + self.albumId.hash;
+    return self.uid.hash;
 }
 
 #pragma mark - NSCoding protocol methods
@@ -100,6 +102,7 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
     [aCoder encodeObject:self.thumbURL forKey:kKeyThumbURL];
     [aCoder encodeObject:self.fullURL forKey:kKeyFullURL];
     [aCoder encodeObject:self.albumId forKey:kKeyAlbumId];
+    [aCoder encodeObject:self.uid forKey:kKeyUid];
     [aCoder encodeObject:self.sourceImages forKey:kKeySourceImages];
 }
 
@@ -108,6 +111,7 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
         _thumbURL = [aDecoder decodeObjectForKey:kKeyThumbURL];
         _fullURL = [aDecoder decodeObjectForKey:kKeyFullURL];
         _albumId = [aDecoder decodeObjectForKey:kKeyAlbumId];
+        _uid = [aDecoder decodeObjectForKey:kKeyUid];
         _sourceImages = [aDecoder decodeObjectForKey:kKeySourceImages];
     }
     
@@ -117,7 +121,7 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
 #pragma mark - NSCopying protocol methods
 
 - (id)copyWithZone:(NSZone *)zone {
-    OLFacebookImage *copy = [[OLFacebookImage allocWithZone:zone] initWithThumbURL:self.thumbURL fullURL:self.fullURL albumId:self.albumId sourceImages:self.sourceImages];
+    OLFacebookImage *copy = [[OLFacebookImage allocWithZone:zone] initWithThumbURL:self.thumbURL fullURL:self.fullURL albumId:self.albumId uid:self.uid sourceImages:self.sourceImages];
     return copy;
 }
 
