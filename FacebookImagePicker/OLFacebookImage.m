@@ -96,28 +96,6 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
     return self.uid.hash;
 }
 
-- (NSString *)extractPhotoIdFromUrl:(NSURL *)URL
-{
-    NSError *error = nil;
-    for (int i = 9; i > 0; i--) {
-        NSString *expressionPattern = [NSString stringWithFormat:@"_([0-9]{%d}[0-9]+)_", i];
-        NSRegularExpression *regex = [NSRegularExpression
-                                      regularExpressionWithPattern:expressionPattern
-                                      options:NSRegularExpressionCaseInsensitive
-                                      error:&error];
-        
-        NSString *urlString= [URL absoluteString];
-        NSTextCheckingResult *regexResult = [regex firstMatchInString:urlString options:0 range:NSMakeRange(0, urlString.length)];
-        
-        NSString *subString = [urlString substringWithRange:regexResult.range];
-        
-        if (subString.length > 2) {
-            return [subString substringWithRange:NSMakeRange(1, subString.length-2)];
-        }
-    }
-    return @"";
-}
-
 #pragma mark - NSCoding protocol methods
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
