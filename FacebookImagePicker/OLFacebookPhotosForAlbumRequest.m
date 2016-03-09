@@ -53,7 +53,7 @@
     if ([FBSDKAccessToken currentAccessToken]) {
         // connection is open, perform the request
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        NSString *graphPath = [NSString stringWithFormat:@"%@/photos?fields=picture,source,images&limit=100", self.album.albumId];
+        NSString *graphPath = [NSString stringWithFormat:@"%@/photos?fields=picture,source,id,images&limit=100", self.album.albumId];
         if (self.after) {
             graphPath = [graphPath stringByAppendingFormat:@"&after=%@", self.after];
         }
@@ -82,6 +82,7 @@
             for (id photo in data) {
                 id thumbURLString = [photo objectForKey:@"picture"];
                 id fullURLString  = [photo objectForKey:@"source"];
+                id uidString  = [photo objectForKey:@"id"];
                 
                 if (!([thumbURLString isKindOfClass:[NSString class]] && [fullURLString isKindOfClass:[NSString class]])) {
                     continue;
@@ -101,7 +102,7 @@
                     }
                 }
                 
-                OLFacebookImage *image = [[OLFacebookImage alloc] initWithThumbURL:[NSURL URLWithString:thumbURLString] fullURL:[NSURL URLWithString:fullURLString] albumId:self.album.albumId sourceImages:sourceImages];
+                OLFacebookImage *image = [[OLFacebookImage alloc] initWithThumbURL:[NSURL URLWithString:thumbURLString] fullURL:[NSURL URLWithString:fullURLString] albumId:self.album.albumId uid:uidString sourceImages:sourceImages];
                 [albumPhotos addObject:image];
             }
             
