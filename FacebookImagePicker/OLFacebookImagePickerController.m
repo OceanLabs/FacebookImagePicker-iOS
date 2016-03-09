@@ -25,6 +25,7 @@
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonClicked)];
     if (self = [super initWithRootViewController:vc]) {
+        _shouldDisplayLogoutButton = YES;
         if ([FBSDKAccessToken currentAccessToken]){
             [self showAlbumList];
         }
@@ -67,6 +68,7 @@
     OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
     self.albumVC = albumController;
     self.albumVC.delegate = self;
+    self.albumVC.shouldDisplayLogoutButton = self.shouldDisplayLogoutButton;
     self.viewControllers = @[albumController];
 }
 
@@ -76,6 +78,12 @@
 
 - (NSArray *)selected {
     return self.albumVC.selected;
+}
+
+- (void)setShouldDisplayLogoutButton:(BOOL)shouldDisplayLogoutButton
+{
+    _shouldDisplayLogoutButton = shouldDisplayLogoutButton;
+    self.albumVC.shouldDisplayLogoutButton = self.shouldDisplayLogoutButton;
 }
 
 #pragma mark - OLAlbumViewControllerDelegate methods

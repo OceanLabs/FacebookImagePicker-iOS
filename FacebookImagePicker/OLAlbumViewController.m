@@ -79,6 +79,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     if (self = [self initWithNibName:NSStringFromClass([OLAlbumViewController class]) bundle:currentBundle]) {
         self.title = @"Photos";
         self.albums = [[NSMutableArray alloc] init];
+        _shouldDisplayLogoutButton = YES;
     }
     return self;
 }
@@ -88,7 +89,9 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(onButtonDoneClicked)];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonLogoutClicked)];
+    if (self.shouldDisplayLogoutButton) {
+        [self addLogoutButtonAnimated:NO];
+    }
     
     self.albumRequestForNextPage = [[OLFacebookAlbumRequest alloc] init];
     [self loadNextAlbumPage];
@@ -110,6 +113,24 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
         [self.delegate albumViewController:self didFailWithError:error];
         
     }
+}
+
+- (void)setShouldDisplayLogoutButton:(BOOL)shouldDisplayLogoutButton
+{
+    _shouldDisplayLogoutButton = shouldDisplayLogoutButton;
+    
+    if (shouldDisplayLogoutButton && (self.navigationItem.leftBarButtonItem == nil)) {
+        [self addLogoutButtonAnimated:YES];
+    }
+    else if (!shouldDisplayLogoutButton && (self.navigationItem.leftBarButtonItem != nil)) {
+        [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    }
+}
+
+- (void)addLogoutButtonAnimated:(BOOL)animated
+{
+    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonLogoutClicked)]
+                                     animated:animated];
 }
 
 - (void)loadNextAlbumPage {
