@@ -62,7 +62,6 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
         _albumId = albumId;
         _uid = uid;
         _sourceImages = sourceImages;
-        _photoId = [self extractPhotoIdFromUrl:fullURL];
     }
     
     return self;
