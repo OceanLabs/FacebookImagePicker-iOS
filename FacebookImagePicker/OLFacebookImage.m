@@ -11,6 +11,7 @@
 static NSString *const kKeyThumbURL = @"co.oceanlabs.FacebookImagePicker.kKeyThumbURL";
 static NSString *const kKeyFullURL = @"co.oceanlabs.FacebookImagePicker.kKeyFullURL";
 static NSString *const kKeyAlbumId = @"co.oceanlabs.FacebookImagePicker.kKeyAlbumId";
+static NSString *const kKeyPhotoId = @"co.oceanlabs.FacebookImagePicker.kKeyPhotoId";
 static NSString *const kKeySourceImages = @"co.oceanlabs.FacebookImagePicker.kKeySourceImages";
 
 static NSString *const kKeyURL = @"co.oceanlabs.FacebookImagePicker.kKeyURL";
@@ -60,6 +61,7 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
         _fullURL = fullURL;
         _albumId = albumId;
         _sourceImages = sourceImages;
+        _photoId = [self extractPhotoIdFromUrl:fullURL];
     }
     
     return self;
@@ -94,12 +96,35 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
     return 37 * (37 * self.thumbURL.hash + self.fullURL.hash) + self.albumId.hash;
 }
 
+- (NSString *)extractPhotoIdFromUrl:(NSURL *)URL
+{
+    NSError *error = nil;
+    for (int i = 9; i > 0; i--) {
+        NSString *expressionPattern = [NSString stringWithFormat:@"_([0-9]{%d}[0-9]+)_", i];
+        NSRegularExpression *regex = [NSRegularExpression
+                                      regularExpressionWithPattern:expressionPattern
+                                      options:NSRegularExpressionCaseInsensitive
+                                      error:&error];
+        
+        NSString *urlString= [URL absoluteString];
+        NSTextCheckingResult *regexResult = [regex firstMatchInString:urlString options:0 range:NSMakeRange(0, urlString.length)];
+        
+        NSString *subString = [urlString substringWithRange:regexResult.range];
+        
+        if (subString.length > 2) {
+            return [subString substringWithRange:NSMakeRange(1, subString.length-2)];
+        }
+    }
+    return @"";
+}
+
 #pragma mark - NSCoding protocol methods
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.thumbURL forKey:kKeyThumbURL];
     [aCoder encodeObject:self.fullURL forKey:kKeyFullURL];
     [aCoder encodeObject:self.albumId forKey:kKeyAlbumId];
+    [aCoder encodeObject:self.photoId forKey:kKeyPhotoId];
     [aCoder encodeObject:self.sourceImages forKey:kKeySourceImages];
 }
 
@@ -108,6 +133,7 @@ static NSString *const kKeyImageHeight = @"co.oceanlabs.FacebookImagePicker.kKey
         _thumbURL = [aDecoder decodeObjectForKey:kKeyThumbURL];
         _fullURL = [aDecoder decodeObjectForKey:kKeyFullURL];
         _albumId = [aDecoder decodeObjectForKey:kKeyAlbumId];
+        _photoId = [aDecoder decodeObjectForKey:kKeyPhotoId];
         _sourceImages = [aDecoder decodeObjectForKey:kKeySourceImages];
     }
     
