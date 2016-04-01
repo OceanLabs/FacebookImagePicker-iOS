@@ -49,7 +49,10 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(onButtonDoneClicked)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringWithDefaultValue(@"ol.photoview.button.done", nil, [NSBundle mainBundle], @"Done", nil)
+                                                                              style:UIBarButtonItemStyleDone
+                                                                             target:self
+                                                                             action:@selector(onButtonDoneClicked)];
     
     CGFloat itemSize = MIN([UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width)/4.0 - 1.0;
     
@@ -163,11 +166,16 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
     if (indexPaths.count == 0)
     {
         self.title = self.album.name;
-        return;
     }
-    
-    NSString *format = (indexPaths.count > 1) ? NSLocalizedString(@"%ld Photos Selected", nil) : NSLocalizedString(@"%ld Photo Selected", nil);
-    self.title = [NSString stringWithFormat:format, (unsigned long)indexPaths.count];
+    else if (indexPaths.count == 1)
+    {
+        self.title = NSLocalizedStringWithDefaultValue(@"ol.photoview.1photoselected", nil, [NSBundle mainBundle], @"1 Photo Selected", nil);
+    }
+    else
+    {
+        self.title = [NSLocalizedStringWithDefaultValue(@"ol.photoview.nbphotoselected", nil, [NSBundle mainBundle], @"##count## Photos Selected", nil)
+                      stringByReplacingOccurrencesOfString:@"##count##" withString:[NSString stringWithFormat:@"%ld", (unsigned long)indexPaths.count]];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource methods
