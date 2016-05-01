@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-NSString *const kOLErrorDomainFacebookImagePicker;
-const NSInteger kOLErrorCodeFacebookImagePickerBadResponse;
-const NSInteger kOLErrorCodeFacebookImagePickerNoOpenSession;
+extern NSString *const kOLErrorDomainFacebookImagePicker;
+extern const NSInteger kOLErrorCodeFacebookImagePickerBadResponse;
+extern const NSInteger kOLErrorCodeFacebookImagePickerNoOpenSession;
 
