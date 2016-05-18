@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
   s.resources = ['FacebookImagePicker/FacebookImagePicker.xcassets', 'FacebookImagePicker/*.xib']
   s.dependency 'FBSDKCoreKit', '~> 4.11.0'
   s.dependency 'FBSDKLoginKit', '~> 4.11.0'
-  s.dependency 'SDWebImage', '~> 3.7.2'
+  s.dependency 'SDWebImage', '~> 3.7.4'
 end
