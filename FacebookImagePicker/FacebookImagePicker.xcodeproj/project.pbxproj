@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E5BDC4C1CEDF3B600257B1A /* OLFacebookImageDownloadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5BDC491CEDF3B600257B1A /* OLFacebookImageDownloadDelegate.m */; };
+		2E5BDC4D1CEDF3B600257B1A /* OLFacebookImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5BDC4B1CEDF3B600257B1A /* OLFacebookImageDownloader.m */; };
 		3D0D7AC91AC07B8400746FC8 /* UIImageView+FacebookFadeIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0D7AC81AC07B8400746FC8 /* UIImageView+FacebookFadeIn.m */; };
-		4717BA7C73BD7519543AD9D4 /* libPods-FacebookImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47FEEFF8F8C8FFF48C9FFE22 /* libPods-FacebookImagePicker.a */; };
+		985B68DCADDD486BAD08BC6B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 358D8857B0F243D7BEA15A1E /* libPods.a */; };
 		CD73BEDE185E220E0009DE03 /* OLFacebookAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73BEDD185E220E0009DE03 /* OLFacebookAlbum.m */; };
 		CD73BEE1185E221B0009DE03 /* OLFacebookImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73BEE0185E221B0009DE03 /* OLFacebookImage.m */; };
 		CD73BEE4185E22480009DE03 /* OLFacebookAlbumRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73BEE3185E22480009DE03 /* OLFacebookAlbumRequest.m */; };
@@ -48,11 +50,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		144025EE631714E88B7F3F86 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		2E5BDC481CEDF3B600257B1A /* OLFacebookImageDownloadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLFacebookImageDownloadDelegate.h; sourceTree = "<group>"; };
+		2E5BDC491CEDF3B600257B1A /* OLFacebookImageDownloadDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLFacebookImageDownloadDelegate.m; sourceTree = "<group>"; };
+		2E5BDC4A1CEDF3B600257B1A /* OLFacebookImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLFacebookImageDownloader.h; sourceTree = "<group>"; };
+		2E5BDC4B1CEDF3B600257B1A /* OLFacebookImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLFacebookImageDownloader.m; sourceTree = "<group>"; };
+		358D8857B0F243D7BEA15A1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D0D7AC71AC07B8400746FC8 /* UIImageView+FacebookFadeIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+FacebookFadeIn.h"; sourceTree = "<group>"; };
 		3D0D7AC81AC07B8400746FC8 /* UIImageView+FacebookFadeIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+FacebookFadeIn.m"; sourceTree = "<group>"; };
-		47FEEFF8F8C8FFF48C9FFE22 /* libPods-FacebookImagePicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FacebookImagePicker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4DAD155AA7A90A15D10D99C7 /* Pods-FacebookImagePicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FacebookImagePicker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FacebookImagePicker/Pods-FacebookImagePicker.debug.xcconfig"; sourceTree = "<group>"; };
-		AA955E2B10C24A58466C6113 /* Pods-FacebookImagePicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FacebookImagePicker.release.xcconfig"; path = "Pods/Target Support Files/Pods-FacebookImagePicker/Pods-FacebookImagePicker.release.xcconfig"; sourceTree = "<group>"; };
 		CD73BEDC185E220E0009DE03 /* OLFacebookAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLFacebookAlbum.h; sourceTree = "<group>"; };
 		CD73BEDD185E220E0009DE03 /* OLFacebookAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLFacebookAlbum.m; sourceTree = "<group>"; };
 		CD73BEDF185E221B0009DE03 /* OLFacebookImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLFacebookImage.h; sourceTree = "<group>"; };
@@ -93,6 +98,7 @@
 		CD9AF194185E206A00A56B3F /* FacebookImagePickerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FacebookImagePickerTests-Info.plist"; sourceTree = "<group>"; };
 		CD9AF196185E206A00A56B3F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CD9AF198185E206A00A56B3F /* FacebookImagePickerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FacebookImagePickerTests.m; sourceTree = "<group>"; };
+		DAF8C837E5551290087B7F7A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +109,7 @@
 				CD9AF170185E206A00A56B3F /* CoreGraphics.framework in Frameworks */,
 				CD9AF172185E206A00A56B3F /* UIKit.framework in Frameworks */,
 				CD9AF16E185E206A00A56B3F /* Foundation.framework in Frameworks */,
-				4717BA7C73BD7519543AD9D4 /* libPods-FacebookImagePicker.a in Frameworks */,
+				985B68DCADDD486BAD08BC6B /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,15 +126,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9033111B9D5ECD1DD7F3C108 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				4DAD155AA7A90A15D10D99C7 /* Pods-FacebookImagePicker.debug.xcconfig */,
-				AA955E2B10C24A58466C6113 /* Pods-FacebookImagePicker.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		CD73BEDA185E21840009DE03 /* FacebookImagePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +168,10 @@
 				CD73BEED185F0BC20009DE03 /* OLFacebookPhotosForAlbumRequest.m */,
 				CD73BEE7185EFFFB0009DE03 /* OLFacebookImagePickerConstants.h */,
 				CD73BEE8185EFFFB0009DE03 /* OLFacebookImagePickerConstants.m */,
+				2E5BDC481CEDF3B600257B1A /* OLFacebookImageDownloadDelegate.h */,
+				2E5BDC491CEDF3B600257B1A /* OLFacebookImageDownloadDelegate.m */,
+				2E5BDC4A1CEDF3B600257B1A /* OLFacebookImageDownloader.h */,
+				2E5BDC4B1CEDF3B600257B1A /* OLFacebookImageDownloader.m */,
 			);
 			name = Private;
 			sourceTree = "<group>";
@@ -231,7 +232,7 @@
 				CD9AF192185E206A00A56B3F /* FacebookImagePickerTests */,
 				CD9AF16C185E206A00A56B3F /* Frameworks */,
 				CD9AF16B185E206A00A56B3F /* Products */,
-				9033111B9D5ECD1DD7F3C108 /* Pods */,
+				FD7CCD7C7F39359FB6289E13 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -251,7 +252,7 @@
 				CD9AF16F185E206A00A56B3F /* CoreGraphics.framework */,
 				CD9AF171185E206A00A56B3F /* UIKit.framework */,
 				CD9AF18C185E206A00A56B3F /* XCTest.framework */,
-				47FEEFF8F8C8FFF48C9FFE22 /* libPods-FacebookImagePicker.a */,
+				358D8857B0F243D7BEA15A1E /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -300,6 +301,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		FD7CCD7C7F39359FB6289E13 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DAF8C837E5551290087B7F7A /* Pods.debug.xcconfig */,
+				144025EE631714E88B7F3F86 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -307,12 +317,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD9AF19C185E206A00A56B3F /* Build configuration list for PBXNativeTarget "FacebookImagePicker" */;
 			buildPhases = (
-				F56933A4B76F06C1FFA3E1B8 /* 📦 Check Pods Manifest.lock */,
+				712C61FEADC04B7D80F95841 /* Check Pods Manifest.lock */,
 				CD9AF166185E206A00A56B3F /* Sources */,
 				CD9AF167185E206A00A56B3F /* Frameworks */,
 				CD9AF168185E206A00A56B3F /* Resources */,
-				CC7A9C5F52C841DC2BB804A1 /* 📦 Embed Pods Frameworks */,
-				3B269E667C96BBBADC4ADF2B /* 📦 Copy Pods Resources */,
+				2ABCD2088C26466188B435FE /* Copy Pods Resources */,
+				BCF23303496CDCB5CCE7D043 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -402,49 +412,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3B269E667C96BBBADC4ADF2B /* 📦 Copy Pods Resources */ = {
+		2ABCD2088C26466188B435FE /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FacebookImagePicker/Pods-FacebookImagePicker-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CC7A9C5F52C841DC2BB804A1 /* 📦 Embed Pods Frameworks */ = {
+		712C61FEADC04B7D80F95841 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FacebookImagePicker/Pods-FacebookImagePicker-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F56933A4B76F06C1FFA3E1B8 /* 📦 Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BCF23303496CDCB5CCE7D043 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -461,8 +471,10 @@
 				3D0D7AC91AC07B8400746FC8 /* UIImageView+FacebookFadeIn.m in Sources */,
 				CD73BEE1185E221B0009DE03 /* OLFacebookImage.m in Sources */,
 				CD73BF5C185F7B560009DE03 /* OLFacebookImagePickerCell.m in Sources */,
+				2E5BDC4C1CEDF3B600257B1A /* OLFacebookImageDownloadDelegate.m in Sources */,
 				CD73BEDE185E220E0009DE03 /* OLFacebookAlbum.m in Sources */,
 				CD73BEEE185F0BC20009DE03 /* OLFacebookPhotosForAlbumRequest.m in Sources */,
+				2E5BDC4D1CEDF3B600257B1A /* OLFacebookImageDownloader.m in Sources */,
 				CD73BEF2185F22C00009DE03 /* OLFacebookImagePickerController.m in Sources */,
 				CD73BF54185F6C570009DE03 /* OLPhotoViewController.m in Sources */,
 				CD73BEE4185E22480009DE03 /* OLFacebookAlbumRequest.m in Sources */,
@@ -588,7 +600,7 @@
 		};
 		CD9AF19D185E206A00A56B3F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4DAD155AA7A90A15D10D99C7 /* Pods-FacebookImagePicker.debug.xcconfig */;
+			baseConfigurationReference = DAF8C837E5551290087B7F7A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -603,7 +615,7 @@
 		};
 		CD9AF19E185E206A00A56B3F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA955E2B10C24A58466C6113 /* Pods-FacebookImagePicker.release.xcconfig */;
+			baseConfigurationReference = 144025EE631714E88B7F3F86 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

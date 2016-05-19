@@ -113,6 +113,9 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
         [self.delegate albumViewController:self didFailWithError:error];
         
     }
+    else{
+        [self.tableView reloadData];
+    }
 }
 
 - (void)setShouldDisplayLogoutButton:(BOOL)shouldDisplayLogoutButton
