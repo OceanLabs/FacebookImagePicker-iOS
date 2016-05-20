@@ -82,7 +82,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 - (id)init {
     NSBundle *currentBundle = [NSBundle bundleForClass:[OLAlbumViewController class]];
     if (self = [self initWithNibName:NSStringFromClass([OLAlbumViewController class]) bundle:currentBundle]) {
-        self.title = @"Photos";
+        self.title = NSLocalizedStringWithDefaultValue(@"ol.albumview.title", nil, [NSBundle mainBundle], @"Photos", nil);
         self.albums = [[NSMutableArray alloc] init];
         _shouldDisplayLogoutButton = YES;
     }
@@ -92,7 +92,10 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(onButtonDoneClicked)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringWithDefaultValue(@"ol.albumview.button.done", nil, [NSBundle mainBundle], @"Done", nil)
+                                                                              style:UIBarButtonItemStyleDone
+                                                                             target:self
+                                                                             action:@selector(onButtonDoneClicked)];
     
     if (self.shouldDisplayLogoutButton) {
         [self addLogoutButtonAnimated:NO];
@@ -134,8 +137,10 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 
 - (void)addLogoutButtonAnimated:(BOOL)animated
 {
-    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonLogoutClicked)]
-                                     animated:animated];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringWithDefaultValue(@"ol.albumview.button.logout", nil, [NSBundle mainBundle], @"Logout", nil)
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(onButtonLogoutClicked)];
 }
 
 - (void)loadNextAlbumPage {
