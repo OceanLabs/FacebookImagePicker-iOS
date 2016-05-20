@@ -36,7 +36,12 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
         }
     }
     
-    [self.imageView setAndFadeInFacebookImageWithURL:album.coverPhotoURL placeholder:placeholderImage];
+    __weak OLAlbumCell *welf = self;
+    [self.imageView setAndFadeInFacebookImageWithURL:album.coverPhotoURL placeholder:placeholderImage completionHandler:^{
+        if (!welf.imageView.superview){
+            [welf addSubview:welf.imageView];
+        }
+    }];
     self.imageView.clipsToBounds = YES;
     self.textLabel.text         = album.name;
     self.detailTextLabel.text   = [NSString stringWithFormat:@"%lu", (unsigned long)album.photoCount];
@@ -112,9 +117,6 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
         self.getAlbumError = nil;
         [self.delegate albumViewController:self didFailWithError:error];
         
-    }
-    else{
-        [self.tableView reloadData];
     }
 }
 
