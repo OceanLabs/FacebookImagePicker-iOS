@@ -8,6 +8,9 @@
 
 #import "UIImageView+FacebookFadeIn.h"
 #import "OLFacebookImageDownloader.h"
+#import "objc/runtime.h"
+
+static char tasksKey;
 
 @implementation UIImageView (FacebookFadeIn)
 - (void)setAndFadeInFacebookImageWithURL:(NSURL *)url {
@@ -15,9 +18,17 @@
 }
 
 -(void)setAndFadeInFacebookImageWithURL:(NSURL *)url placeholder:(UIImage *)placeholder {
-    self.alpha = 0;
+    for (id key in self.tasks.allKeys){
+        if (![key isEqual:url]){
+            [self.tasks[key] cancel];
+        }
+    }
     
-    [[OLFacebookImageDownloader sharedInstance] downloadImageAtURL:url withCompletionHandler:^(UIImage *image, NSError *error){
+    self.alpha = 0;
+    NSURLSessionTask *task = [[OLFacebookImageDownloader sharedInstance] downloadImageAtURL:url withCompletionHandler:^(UIImage *image, NSError *error){
+        if ([self.tasks[url] state] == NSURLSessionTaskStateCanceling){
+            return;
+        }
         self.image = image;
         [UIView beginAnimations:@"fadeIn" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -26,7 +37,18 @@
         [UIView commitAnimations];
         
     }];
-    
+    self.tasks[url] = task;
 }
+
+- (NSMutableDictionary *)tasks{
+    NSMutableDictionary *tasks = objc_getAssociatedObject(self, &tasksKey);
+    if (tasks){
+        return tasks;
+    }
+    tasks = [[NSMutableDictionary alloc] init];
+    objc_setAssociatedObject(self, &tasksKey, tasks, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return tasks;
+}
+
 @end
 
