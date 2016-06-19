@@ -42,4 +42,6 @@
 
 @property (nonatomic, assign) BOOL shouldDisplayLogoutButton;
 
+@property (nonatomic, assign) BOOL isMultiselectEnabled;
+
 @end

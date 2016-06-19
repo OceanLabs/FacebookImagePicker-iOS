@@ -23,4 +23,5 @@
 @property (nonatomic, weak) id<OLAlbumViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSArray/*<OLFacebookImage>*/ *selected;
 @property (nonatomic, assign) BOOL shouldDisplayLogoutButton;
+@property (nonatomic, assign) BOOL isMultiselectEnabled;
 @end
