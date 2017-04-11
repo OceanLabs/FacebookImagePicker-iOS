@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'FacebookImagePicker'
-  s.version      = '2.0.11'
+  s.version      = '2.0.12'
   s.license      = 'MIT'
   s.summary      = 'An image/photo picker for Facebook albums & photos modelled after UIImagePickerController'
   s.author       = { "Deon Botha" => "deon@oceanlabs.co" }
@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
   }
   s.source_files = ['FacebookImagePicker/OL*.{h,m}', 'FacebookImagePicker/UIImageView+FacebookFadeIn.{h,m}']
   s.resources = ['FacebookImagePicker/FacebookImagePicker.xcassets', 'FacebookImagePicker/*.xib']
-  s.dependency 'FBSDKCoreKit', '~> 4.11.0'
-  s.dependency 'FBSDKLoginKit', '~> 4.11.0'
+  s.dependency 'FBSDKCoreKit', '~> 4.20.2'
+  s.dependency 'FBSDKLoginKit', '~> 4.20.2'
 end
