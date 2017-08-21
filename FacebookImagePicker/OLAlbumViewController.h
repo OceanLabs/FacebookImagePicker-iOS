@@ -11,6 +11,9 @@
 @class OLAlbumViewController;
 @class OLFacebookImage;
 
+@interface OLAlbumCell : UITableViewCell
+@end
+
 @protocol OLAlbumViewControllerDelegate <NSObject>
 - (void)albumViewControllerDoneClicked:(OLAlbumViewController *)albumController;
 - (void)albumViewController:(OLAlbumViewController *)albumController didFailWithError:(NSError *)error;

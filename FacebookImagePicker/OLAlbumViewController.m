@@ -17,7 +17,7 @@
 
 static const NSUInteger kAlbumPreviewImageSize = 78;
 
-@interface OLAlbumCell : UITableViewCell
+@interface OLAlbumCell ()
 @property (nonatomic, strong) OLFacebookAlbum *album;
 @end
 
