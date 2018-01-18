@@ -11,6 +11,9 @@
 @class OLAlbumViewController;
 @class OLFacebookImage;
 
+@interface OLAlbumCell : UITableViewCell
+@end
+
 @protocol OLAlbumViewControllerDelegate <NSObject>
 - (void)albumViewControllerDoneClicked:(OLAlbumViewController *)albumController;
 - (void)albumViewController:(OLAlbumViewController *)albumController didFailWithError:(NSError *)error;
@@ -23,4 +26,5 @@
 @property (nonatomic, weak) id<OLAlbumViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSArray/*<OLFacebookImage>*/ *selected;
 @property (nonatomic, assign) BOOL shouldDisplayLogoutButton;
+@property (nonatomic, assign) BOOL isMultiselectEnabled;
 @end

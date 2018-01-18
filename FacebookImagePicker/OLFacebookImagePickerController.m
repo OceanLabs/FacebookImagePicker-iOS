@@ -26,6 +26,7 @@
     vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonClicked)];
     if (self = [super initWithRootViewController:vc]) {
         _shouldDisplayLogoutButton = YES;
+        _isMultiselectEnabled = YES;
         if ([FBSDKAccessToken currentAccessToken]){
             [self showAlbumList];
         }
@@ -68,6 +69,7 @@
     OLAlbumViewController *albumController = [[OLAlbumViewController alloc] init];
     self.albumVC = albumController;
     self.albumVC.delegate = self;
+    self.albumVC.isMultiselectEnabled = self.isMultiselectEnabled;
     self.albumVC.shouldDisplayLogoutButton = self.shouldDisplayLogoutButton;
     self.viewControllers = @[albumController];
 }
@@ -78,6 +80,12 @@
 
 - (NSArray *)selected {
     return self.albumVC.selected;
+}
+
+- (void)setIsMultiselectEnabled:(BOOL)isMultiselectEnabled
+{
+    _isMultiselectEnabled = isMultiselectEnabled;
+    self.albumVC.isMultiselectEnabled = self.isMultiselectEnabled;
 }
 
 - (void)setShouldDisplayLogoutButton:(BOOL)shouldDisplayLogoutButton

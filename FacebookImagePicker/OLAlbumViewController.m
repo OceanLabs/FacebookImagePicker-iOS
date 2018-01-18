@@ -17,7 +17,7 @@
 
 static const NSUInteger kAlbumPreviewImageSize = 78;
 
-@interface OLAlbumCell : UITableViewCell
+@interface OLAlbumCell ()
 @property (nonatomic, strong) OLFacebookAlbum *album;
 @end
 
@@ -118,6 +118,11 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
         [self.delegate albumViewController:self didFailWithError:error];
         
     }
+}
+
+- (void)setIsMultiselectEnabled:(BOOL)isMultiselectEnabled
+{
+    _isMultiselectEnabled = isMultiselectEnabled;
 }
 
 - (void)setShouldDisplayLogoutButton:(BOOL)shouldDisplayLogoutButton
@@ -230,6 +235,7 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OLFacebookAlbum *album = [self.albums objectAtIndex:indexPath.row];
     self.photoViewController = [[OLPhotoViewController alloc] initWithAlbum:album];
+    self.photoViewController.isMultiselectEnabled = self.isMultiselectEnabled;
     self.photoViewController.selected = self.selected;
     self.photoViewController.delegate = self;
     [self.navigationController pushViewController:self.photoViewController animated:YES];
@@ -257,7 +263,10 @@ static const NSUInteger kAlbumPreviewImageSize = 78;
 }
 
 - (void)photoViewController:(OLPhotoViewController *)photoController didSelectImage:(OLFacebookImage *)image{
-    [self updateSelectedFromPhotoViewController];
+    if(self.isMultiselectEnabled) {
+        [self updateSelectedFromPhotoViewController];
+    }
+    
     if ([self.delegate respondsToSelector:@selector(albumViewController:didSelectImage:)]){
         [self.delegate albumViewController:self didSelectImage:image];
     }

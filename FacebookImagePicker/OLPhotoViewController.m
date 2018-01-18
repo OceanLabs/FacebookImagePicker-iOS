@@ -60,13 +60,19 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
     layout.minimumLineSpacing           = 1.0;
     layout.footerReferenceSize          = CGSizeMake(0, 0);
     self.collectionView.collectionViewLayout = layout;
-    self.collectionView.allowsMultipleSelection = YES;
+    self.collectionView.allowsMultipleSelection = self.isMultiselectEnabled;
     
     [self.collectionView registerClass:[OLFacebookImagePickerCell class] forCellWithReuseIdentifier:kImagePickerCellReuseIdentifier];
     [self.collectionView registerClass:[SupplementaryView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kSupplementaryViewFooterReuseIdentifier];
     
     self.nextPageRequest = [[OLFacebookPhotosForAlbumRequest alloc] initWithAlbum:self.album];
     [self loadNextPage];
+}
+
+- (void) setIsMultiselectEnabled:(BOOL)isMultiselectEnabled
+{
+    _isMultiselectEnabled = isMultiselectEnabled;
+    self.collectionView.allowsMultipleSelection = isMultiselectEnabled;
 }
 
 - (NSArray *)selected {
@@ -204,7 +210,13 @@ static NSString *const kSupplementaryViewFooterReuseIdentifier = @"co.oceanlabs.
 }
 
 -(void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    [self updateTitleWithSelectedIndexPaths:collectionView.indexPathsForSelectedItems];
+    if(self.isMultiselectEnabled) {
+        [self updateTitleWithSelectedIndexPaths:collectionView.indexPathsForSelectedItems];
+    
+    } else {
+        [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    }
+        
     if ([self.delegate respondsToSelector:@selector(photoViewController:didSelectImage:)]){
         [self.delegate photoViewController:self didSelectImage:[self.photos objectAtIndex:indexPath.item]];
     }
